@@ -48,7 +48,7 @@ func _ready() -> void:
 
 	target.jump.connect(func(): add_trauma(0.15))
 	target.died.connect(func(): add_trauma(1.0))
-	target.hit_remote_player.connect(func(): add_trauma(0.8))
+	target.remote_player_knockback.connect(func(): add_trauma(0.8))
 
 	if noise: return
 
