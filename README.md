@@ -9,6 +9,15 @@ An elegant, fast-paced local multiplayer 2D arcade game built with **Godot Engin
 - **Kinetic Arcade Physics:** Features deep movement mechanics including directional jumping, horizontal friction, enhanced gravity multipliers on descent, and a high-impact repulsion system for player-to-player collisions.
 - **Zero-Configuration Local Multiplayer:** Built on a lightweight peer-to-peer architecture using UDP broadcasting. Players on the same network are discovered automatically and synced seamlessly.
 
+## To-do
+
+A list of future to-do lists since it would overgrow the project's escope too much:
+
+- [ ] Roguelite aspects
+- [ ] Enemies
+- [ ] Projectiles Perry
+- [ ] Boss fights
+
 ## 🎮 How to Play
 
 ### Desktop (Keyboard)
