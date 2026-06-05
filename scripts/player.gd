@@ -1,0 +1,219 @@
+#	Copyright 2026 Inkpunk Game Studio
+#
+#	Licensed under the Apache License, Version 2.0 (the "License");
+#	you may not use this file except in compliance with the License.
+#	You may obtain a copy of the License at
+#
+#	http://www.apache.org/licenses/LICENSE-2.0
+#
+#	Unless required by applicable law or agreed to in writing, software
+#	distributed under the License is distributed on an "AS IS" BASIS,
+#	WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+#	See the License for the specific language governing permissions and
+#	limitations under the License.
+
+extends CharacterBody2D
+class_name Player
+
+## Emitted when the player successfully executes a jump.
+signal jump
+## Emitted when the player enters the dead state.
+signal died
+## Emitted when colliding with another player instance.
+signal hit_remote_player
+
+@export_group('Arcade Physics')
+## The upward velocity applied on jump execution.
+@export var jump_force : float = 800.
+## The impulse force applied when bouncing off another player.
+@export var repulsion_force : float = 1200.
+## Horizontal velocity applied during directional jumps.
+@export var forward_force : float = 500.
+## Linear deceleration applied to horizontal movement when no input is active.
+@export var horizontal_friction : float = 500.
+## Cooldown time (in seconds) enforced between consecutive jumps.
+@export var jump_cooldown : float = .1
+
+@export_group('Visual Assets')
+## Player texture.
+@export var active_texture : Texture2D
+## Texture displayed when the player dies.
+@export var dead_texture : Texture2D
+## Pool of textures used for generating random cosmetic feather particles.
+@export var feather_textures : Array[Texture2D]
+
+const FALL_MULTIPLIER : float = 1.8
+const MAX_FALL_SPEED : float = 1000.
+const MAXIMUM_FEATHERS : int = 3
+
+static var base_gravity : float = ProjectSettings.get_setting('physics/2d/default_gravity')
+static var static_jump_force : float
+
+var original_scale : Vector2
+var cooldown_timer : float = 0.0
+var is_control_enabled : bool = true
+
+# Dependencies
+@onready var sprite : Sprite2D = $Sprite2D
+@onready var collision : CollisionShape2D = $CollisionShape2D
+@onready var tails_container : Node2D = $Tail
+@onready var wings_container : Node2D = $Wings
+@onready var wings_animator : AnimationPlayer = $Wings/AnimationPlayer
+
+# Sound effects
+@onready var sound_woosh : AudioStreamPlayer2D = $Sounds/Wosh
+@onready var sound_hit : AudioStreamPlayer2D = $Sounds/Hit
+@onready var sound_fall : AudioStreamPlayer2D = $Sounds/Fall
+
+func _ready() -> void:
+	sprite.texture = active_texture
+	original_scale = sprite.scale
+	static_jump_force = jump_force
+
+	wings_animator.animation_finished.connect(func(anim_name : String) -> void:
+		if anim_name != 'RESET':
+			wings_animator.play('RESET')
+	)
+
+func _process(delta : float) -> void:
+	if not is_control_enabled: return
+
+	_update_cooldown(delta)
+	_handle_screen_touch_input()
+
+func _physics_process(delta : float) -> void:
+	_apply_gravity(delta)
+	_apply_friction(delta)
+
+	move_and_slide()
+
+	# note for future: I may consider throttling global network updates 
+	# instead of running them on every single physics frame step.
+	Network.set_player_position(position)
+
+	_handle_direction_and_rotation(delta)
+	_process_collisions()
+
+func _die() -> void:
+	is_control_enabled = false
+	sprite.texture = dead_texture
+	sound_fall.play()
+	wings_container.hide()
+	died.emit()
+
+# inputs
+
+func _update_cooldown(delta : float) -> void: if cooldown_timer > 0.0: cooldown_timer -= delta
+
+func _unhandled_input(event : InputEvent) -> void:
+	if not is_control_enabled: return
+	if cooldown_timer > 0.0: return
+
+	if event.is_action_pressed('Left', true) : _execute_jump(-1)
+	if event.is_action_pressed('Right', true): _execute_jump(1)
+
+func _handle_screen_touch_input() -> void:
+	if cooldown_timer > 0.0: return
+
+	if Input.is_action_pressed('Jump', true):
+		var screen_middle : float = get_viewport_rect().size.x / 2.0
+		var touch_x : float = get_viewport().get_mouse_position().x
+		var direction : int = 1 if touch_x > screen_middle else -1
+		_execute_jump(direction)
+
+# arcade physics and movement
+
+func _apply_gravity(delta : float) -> void:
+	var current_gravity : float = base_gravity
+	if velocity.y > 0: current_gravity *= FALL_MULTIPLIER
+	velocity.y = min(velocity.y + current_gravity * delta, MAX_FALL_SPEED)
+
+func _apply_friction(delta : float) -> void:
+	velocity.x = move_toward(velocity.x, 0, horizontal_friction * delta)
+
+func _execute_jump(direction : int) -> void:
+	cooldown_timer = jump_cooldown
+	get_viewport().set_input_as_handled()
+
+	velocity.y = -jump_force
+	# if the player changes to the opposite direction, the force is half
+	var current_forward_force : float = forward_force if ((direction > 0) == (velocity.x >= 0)) else (forward_force / 2.0)
+	velocity.x = current_forward_force * direction
+
+	# juice
+	_play_jump_effects(direction)
+	jump.emit()
+
+func _handle_direction_and_rotation(delta : float) -> void:
+	if not is_control_enabled: return
+
+	if velocity.x != 0: sprite.flip_h = velocity.x < 0
+	var direction_sign : float = -1.0 if sprite.flip_h else 1.0
+
+	wings_container.position.x = abs(wings_container.position.x) * direction_sign * -1
+
+	var target_angle : float = deg_to_rad(-30.0) if velocity.y < 0 else deg_to_rad(90.0)
+	var lerp_speed : float = 20.0 if velocity.y < 0 else 4.0
+	rotation = lerp_angle(rotation, target_angle * direction_sign, lerp_speed * delta)
+
+# collision
+
+func _process_collisions() -> void:
+	for i in range(get_slide_collision_count()):
+		var collision_data := get_slide_collision(i)
+		var collider := collision_data.get_collider() as Node
+		if not collider: continue
+
+		if collider.is_in_group('Players'): _handle_remote_player_collision(collider)
+		elif collider.is_in_group('Damageable') and is_control_enabled: _die()
+
+func _handle_remote_player_collision(collider : Node2D) -> void:
+	sound_hit.play()
+	var push_direction : Vector2 = (global_position - collider.global_position).normalized()
+	velocity = push_direction * repulsion_force
+	hit_remote_player.emit()
+
+# juice
+
+func _play_jump_effects(direction : int) -> void:
+	# squash and stretch
+	sprite.scale = sprite.scale + Vector2(0.7, -0.3) 
+	var sprite_tween := create_tween()
+	sprite_tween.tween_property(sprite, 'scale', original_scale, 0.2).set_trans(Tween.TRANS_ELASTIC)
+
+	wings_animator.play('flap')
+	sound_woosh.play()
+	Input.vibrate_handheld(25, 0.5)
+
+	_generate_feathers(direction)
+
+func _generate_feathers(direction : int) -> void:
+	if feather_textures.is_empty(): return
+	@warning_ignore('integer_division')
+	var feathers_per_texture : int = MAXIMUM_FEATHERS / feather_textures.size()
+	if feathers_per_texture <= 0: return
+
+	for texture in feather_textures:
+		var particles := CPUParticles2D.new()
+		_configure_feather_particle(particles, texture, direction, feathers_per_texture)
+
+		tails_container.add_child(particles)
+		particles.finished.connect(particles.queue_free)
+		particles.emitting = true
+
+func _configure_feather_particle(particles : CPUParticles2D, texture : Texture2D, direction : int, amount : int) -> void:
+	particles.texture = texture
+	particles.one_shot = true
+	particles.explosiveness = 1.0
+	particles.lifetime = 4.0
+	particles.amount = amount
+	particles.scale_amount_min = sprite.scale.x
+	particles.scale_amount_max = sprite.scale.x
+	particles.emission_shape = CPUParticles2D.EMISSION_SHAPE_SPHERE
+	particles.emission_sphere_radius = 50.0
+	particles.local_coords = false
+	particles.direction = Vector2(-direction, -1)
+	particles.spread = 45.0
+	particles.initial_velocity_min = 250.0
+	particles.initial_velocity_max = 350.0
+	particles.z_index = -4

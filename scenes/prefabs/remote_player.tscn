@@ -1,0 +1,174 @@
+[gd_scene format=3 uid="uid://pa0gqhcrhi6f"]
+
+[ext_resource type="Script" uid="uid://d237cs1lkaq7k" path="res://scripts/remote_player.gd" id="1_x85gu"]
+[ext_resource type="Texture2D" uid="uid://cckl2pc5pgbg0" path="res://assets/artwork/birds/Flapper/feathers_0.tres" id="2_7wuec"]
+[ext_resource type="Texture2D" uid="uid://b8lcx3f2vsa33" path="res://assets/artwork/birds/Flapper/bird.tres" id="2_x85gu"]
+[ext_resource type="Texture2D" uid="uid://dggen7n830v2i" path="res://assets/artwork/birds/Flapper/wings_0.tres" id="3_1kwg0"]
+[ext_resource type="Texture2D" uid="uid://b8ycmc517w3kr" path="res://assets/artwork/birds/Flapper/feathers_1.tres" id="3_bhxst"]
+[ext_resource type="Texture2D" uid="uid://bos2sfp3nwepw" path="res://assets/artwork/birds/Flapper/feathers_2.tres" id="4_b4j18"]
+[ext_resource type="Texture2D" uid="uid://bsfgvuagmp5ay" path="res://assets/artwork/birds/Flapper/wings_1.tres" id="4_x1mp7"]
+[ext_resource type="FontFile" uid="uid://g3480khnpjv1" path="res://assets/fonts/pixel_operator/PixelOperator8-Bold.ttf" id="5_7daf1"]
+[ext_resource type="Texture2D" uid="uid://cmput8pioxn2h" path="res://assets/artwork/birds/Flapper/wings_2.tres" id="5_hgq68"]
+[ext_resource type="FontFile" uid="uid://bm6wi8r507fev" path="res://assets/fonts/twemoji_color_font/TwitterColorEmoji-SVGinOT.ttf" id="6_wdi53"]
+[ext_resource type="AudioStream" uid="uid://blj7al8jnchgt" path="res://assets/sound/effects/wosh.wav" id="9_b4j18"]
+[ext_resource type="AudioStream" uid="uid://c01g66bycu607" path="res://assets/sound/effects/fall.mp3" id="10_7daf1"]
+
+[sub_resource type="FontVariation" id="FontVariation_w3vuy"]
+base_font = ExtResource("6_wdi53")
+variation_transform = Transform2D(0, 0, 0, 0, 0, 0)
+spacing_glyph = 3
+baseline_offset = -0.135
+
+[sub_resource type="FontVariation" id="FontVariation_wrld7"]
+fallbacks = Array[Font]([SubResource("FontVariation_w3vuy")])
+base_font = ExtResource("5_7daf1")
+
+[sub_resource type="LabelSettings" id="LabelSettings_jih0h"]
+font = SubResource("FontVariation_wrld7")
+font_size = 15
+outline_size = 10
+outline_color = Color(0.0142752165, 0.014275218, 0.014275218, 1)
+
+[sub_resource type="Animation" id="Animation_2p56t"]
+length = 0.001
+loop_mode = 1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [ExtResource("3_1kwg0")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-37.5, 20)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [20.0]
+}
+
+[sub_resource type="Animation" id="Animation_5kejv"]
+resource_name = "flap"
+length = 4.0
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [ExtResource("3_1kwg0"), ExtResource("4_x1mp7"), ExtResource("5_hgq68"), ExtResource("4_x1mp7")]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = false
+tracks/1/path = NodePath(".:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 1,
+"values": [Vector2(-37.5, 20), Vector2(-37.5, 25), Vector2(-37.5, 32.5), Vector2(-37.5, 25)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".:position:y")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1, 2, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
+"update": 1,
+"values": [25.0, 32.5, 25.0]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_7wuec"]
+_data = {
+&"RESET": SubResource("Animation_2p56t"),
+&"flap": SubResource("Animation_5kejv")
+}
+
+[node name="RemotePlayer" type="CharacterBody2D" unique_id=836613540 groups=["Players"]]
+texture_filter = 1
+script = ExtResource("1_x85gu")
+label_y_offset = -70.0
+feathers_textures = Array[Texture2D]([ExtResource("2_7wuec"), ExtResource("3_bhxst"), ExtResource("4_b4j18")])
+
+[node name="Label" type="Label" parent="." unique_id=431962856]
+top_level = true
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -690.0
+offset_top = -1038.0
+offset_right = -390.0
+offset_bottom = -1022.0
+grow_horizontal = 2
+grow_vertical = 2
+text = "PLACEHOLDER😘😘💀💀"
+label_settings = SubResource("LabelSettings_jih0h")
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 1
+max_lines_visible = 1
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=2023391037]
+y_sort_enabled = true
+scale = Vector2(5, 5)
+texture = ExtResource("2_x85gu")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=767736955 groups=["Players"]]
+polygon = PackedVector2Array(-35, 30, -35, 35, 20, 35, 20, 30, 30, 30, 30, -20, 25, -20, 25, -25, 20, -25, 20, -30, 15, -30, 15, -35, 10, -35, 10, -40, -25, -40, -25, -35, -30, -35, -30, -30, -35, -30, -35, 15, -40, 15, -40, 30)
+
+[node name="Wings" type="Node2D" parent="." unique_id=1979753853]
+position = Vector2(-42.5, -5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Wings" unique_id=1086766564]
+position = Vector2(0, 20)
+scale = Vector2(5, 5)
+texture = ExtResource("3_1kwg0")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Wings" unique_id=830241507]
+root_node = NodePath("../Sprite2D")
+libraries/ = SubResource("AnimationLibrary_7wuec")
+speed_scale = 20.0
+
+[node name="Tail" type="Node2D" parent="." unique_id=270643460]
+
+[node name="Sounds" type="Node2D" parent="." unique_id=1192586815]
+
+[node name="Wosh" type="AudioStreamPlayer2D" parent="Sounds" unique_id=572725883]
+stream = ExtResource("9_b4j18")
+volume_db = 19.0
+
+[node name="Fall" type="AudioStreamPlayer2D" parent="Sounds" unique_id=2097939570]
+stream = ExtResource("10_7daf1")

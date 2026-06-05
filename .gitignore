@@ -1,0 +1,8 @@
+# Godot 4+ specific ignores
+.godot/
+/android/
+*.tmp
+w
+# Keystores (Keep your signing keys out of GitHub!)
+*.keystore
+*.jks
