@@ -19,19 +19,24 @@ class_name Player
 signal jump
 ## Emitted when the player enters the dead state.
 signal died
+## Emitted when the player enters the game again after dying.
+signal respawned
 ## Emitted when the player takes damage.
 signal damaged(aces_left : int)
 ## Emitted when colliding with another player instance.
 signal remote_player_knockback
 ## Emitted when player score changes.
 signal score_changed(score : int)
+## Emitted when player dies and the internal respawn countdown begins counting
+signal respawn_countdown(remaining : int)
 
 @export_group('Experience')
 ## The amount of damage a player can take before dying. Change this to change the starter aces.
 @export var aces : int = 1
 ## The amount of score the player has to use along the game (works like the game currency). Change this to set the starter score.
 @export var score : int = 0
-
+## The time, in seconds, the player has to wait before respawning again.
+@export var respawn_delay : int = 10
 
 @export_group('Arcade Physics')
 ## The upward velocity applied on jump execution.
@@ -63,6 +68,7 @@ static var static_jump_force : float
 var original_scale : Vector2
 var cooldown_timer : float = 0.0
 var is_control_enabled : bool = true
+var allowed_to_teleport : bool = false
 
 # Dependencies
 @onready var sprite : Sprite2D = $Sprite2D
@@ -88,7 +94,14 @@ func _ready() -> void:
 			wings_animator.play('RESET')
 	)
 
-	visible_on_screen_notificer.screen_exited.connect(func() : _take_damage(99999))
+	visible_on_screen_notificer.screen_exited.connect(func():
+		if allowed_to_teleport:
+			allowed_to_teleport = false
+			return
+		_take_damage(99999)
+	)
+
+	visible_on_screen_notificer.screen_entered.connect(func(): allowed_to_teleport = false)
 
 	if aces <= 0: _take_damage() # in case my dumbass set player lives to 0 by accident
 
@@ -126,7 +139,6 @@ func _take_damage(amount : int = 1) -> void:
 		return
 
 	aces -= amount
-	print(aces)
 	damaged.emit(aces)
 
 func _die() -> void:
@@ -136,6 +148,34 @@ func _die() -> void:
 	sprite.texture = dead_texture
 	died.emit()
 	wings_container.hide()
+
+	_begin_respawn_sequence()
+
+func _begin_respawn_sequence() -> void:
+	if is_control_enabled: return
+
+	if respawn_delay > 0:
+		var timer : Timer = Timer.new()
+		print(timer)
+		timer.wait_time = 1.0
+		add_child(timer)
+		timer.start()
+
+		for i in respawn_delay:
+			respawn_countdown.emit(respawn_delay - i)
+			await timer.timeout
+
+		timer.queue_free()
+
+	sprite.texture = active_texture
+	wings_container.show()
+	is_control_enabled = true
+	position = Vector2.ZERO
+	velocity = Vector2.UP * jump_force
+	allowed_to_teleport = true
+	aces = 1
+
+	respawned.emit()
 
 # inputs
 
