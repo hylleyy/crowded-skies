@@ -21,6 +21,8 @@ signal jump
 signal died
 ## Emitted when colliding with another player instance.
 signal hit_remote_player
+## Emitted when player score changes.
+signal score_changed(score : int)
 
 @export_group('Arcade Physics')
 ## The upward velocity applied on jump execution.
@@ -52,6 +54,7 @@ static var static_jump_force : float
 var original_scale : Vector2
 var cooldown_timer : float = 0.0
 var is_control_enabled : bool = true
+var score : int = 0
 
 # Dependencies
 @onready var sprite : Sprite2D = $Sprite2D
@@ -64,6 +67,7 @@ var is_control_enabled : bool = true
 @onready var sound_woosh : AudioStreamPlayer2D = $Sounds/Wosh
 @onready var sound_hit : AudioStreamPlayer2D = $Sounds/Hit
 @onready var sound_fall : AudioStreamPlayer2D = $Sounds/Fall
+@onready var sound_score : AudioStreamPlayer2D = $Sounds/Score
 
 func _ready() -> void:
 	sprite.texture = active_texture
@@ -136,8 +140,11 @@ func _execute_jump(direction : int) -> void:
 	get_viewport().set_input_as_handled()
 
 	velocity.y = -jump_force
-	# if the player changes to the opposite direction, the force is half
-	var current_forward_force : float = forward_force if ((direction > 0) == (velocity.x >= 0)) else (forward_force / 2.0)
+	var current_forward_force : float = forward_force
+	# if we have horizontal momentum, and it opposes our input direction, halve the force
+	if velocity.x != 0 and sign(velocity.x) != sign(direction):
+		current_forward_force = forward_force / 2.
+
 	velocity.x = current_forward_force * direction
 
 	# juice
@@ -217,3 +224,12 @@ func _configure_feather_particle(particles : CPUParticles2D, texture : Texture2D
 	particles.initial_velocity_min = 250.0
 	particles.initial_velocity_max = 350.0
 	particles.z_index = -4
+
+# score
+
+func increase_score(amount : int = 1) -> void:
+	if amount <= 0: return
+
+	score += amount
+	score_changed.emit(score)
+	sound_score.play()

@@ -8,18 +8,18 @@
 [ext_resource type="Script" uid="uid://bu12nmwm3dy0u" path="res://scripts/screen_boundaries.gd" id="4_77ftd"]
 [ext_resource type="Texture2D" uid="uid://bsfgvuagmp5ay" path="res://assets/artwork/birds/Flapper/wings_1.tres" id="4_w82wt"]
 [ext_resource type="Texture2D" uid="uid://cmput8pioxn2h" path="res://assets/artwork/birds/Flapper/wings_2.tres" id="5_4xkvg"]
-[ext_resource type="Texture2D" uid="uid://5t2wmaqr3ov1" path="res://assets/artwork/obstacles/pipes/sunset_head.tres" id="5_crjma"]
 [ext_resource type="Texture2D" uid="uid://cckl2pc5pgbg0" path="res://assets/artwork/birds/Flapper/feathers_0.tres" id="6_4xkvg"]
 [ext_resource type="Texture2D" uid="uid://b8ycmc517w3kr" path="res://assets/artwork/birds/Flapper/feathers_1.tres" id="7_5kejv"]
 [ext_resource type="Texture2D" uid="uid://bos2sfp3nwepw" path="res://assets/artwork/birds/Flapper/feathers_2.tres" id="8_en01c"]
 [ext_resource type="AudioStream" uid="uid://blj7al8jnchgt" path="res://assets/sound/effects/wosh.wav" id="9_6v4vb"]
 [ext_resource type="AudioStream" uid="uid://c01g66bycu607" path="res://assets/sound/effects/fall.mp3" id="10_jdgwk"]
 [ext_resource type="AudioStream" uid="uid://42qd58b36kee" path="res://assets/sound/effects/hit.wav" id="11_cxrsx"]
-[ext_resource type="Script" uid="uid://bd0nb85jiedx8" path="res://scripts/pipes.gd" id="14_cxrsx"]
-[ext_resource type="Texture2D" uid="uid://cffi42nopunf0" path="res://assets/artwork/obstacles/pipes/sunset_body.tres" id="15_6v4vb"]
+[ext_resource type="AudioStream" uid="uid://n8vf0qntuayh" path="res://assets/sound/effects/score.mp3" id="13_fkwrg"]
+[ext_resource type="PackedScene" uid="uid://brckemi80fsna" path="res://scenes/prefabs/pipes.tscn" id="15_fplra"]
 [ext_resource type="Texture2D" uid="uid://b66go6ja2wwty" path="res://assets/artwork/parallax/sunset/parallax_0.png" id="15_hr8dd"]
 [ext_resource type="FontFile" uid="uid://cyi534ybc1xkx" path="res://assets/fonts/pixel_operator/PixelOperatorMono8-Bold.ttf" id="18_l1i55"]
 [ext_resource type="FontFile" uid="uid://bv6fegciausty" path="res://assets/fonts/pixel_operator/PixelOperatorSC.ttf" id="19_4h73g"]
+[ext_resource type="Script" uid="uid://b17nadhuacqau" path="res://scripts/score_label.gd" id="19_4n06y"]
 [ext_resource type="Texture2D" uid="uid://dv5m8utphcfgn" path="res://assets/artwork/parallax/sunset/parallax_3.png" id="21_fkwrg"]
 [ext_resource type="Texture2D" uid="uid://84k068el34cr" path="res://assets/artwork/parallax/sunset/parallax_1.png" id="22_4n06y"]
 [ext_resource type="Texture2D" uid="uid://r647cw1b43ym" path="res://assets/artwork/parallax/sunset/parallax_2.png" id="23_wpp8p"]
@@ -190,6 +190,10 @@ volume_db = 8.0
 stream = ExtResource("11_cxrsx")
 volume_db = 5.0
 
+[node name="Score" type="AudioStreamPlayer2D" parent="Player/Sounds" unique_id=1415894485]
+stream = ExtResource("13_fkwrg")
+volume_db = 5.0
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=320330791 node_paths=PackedStringArray("target")]
 script = ExtResource("3_qmrwl")
 target = NodePath("../Player")
@@ -199,59 +203,23 @@ collision_layer = 2
 collision_mask = 2
 script = ExtResource("4_77ftd")
 
-[node name="Pipes" type="Node2D" parent="." unique_id=1840783276 groups=["Damageable"]]
+[node name="Pipes" parent="." unique_id=1848497384 instance=ExtResource("15_fplra")]
 position = Vector2(300, 0)
-script = ExtResource("14_cxrsx")
 
-[node name="Top" type="StaticBody2D" parent="Pipes" unique_id=1089762946 groups=["Damageable"]]
-position = Vector2(0, -150)
-collision_layer = 2
-collision_mask = 2
+[node name="Pipes2" parent="." unique_id=908272634 instance=ExtResource("15_fplra")]
+position = Vector2(718, 0)
+height = -200.0
+gap = 250.0
 
-[node name="Head" type="Sprite2D" parent="Pipes/Top" unique_id=1722223196]
-z_index = -3
-position = Vector2(0, -50)
-rotation = 3.1415925
-scale = Vector2(5, 5)
-texture = ExtResource("5_crjma")
-flip_h = true
+[node name="Pipes3" parent="." unique_id=1031978866 instance=ExtResource("15_fplra")]
+position = Vector2(1117, 0)
+height = 200.0
+gap = 200.0
 
-[node name="Body" type="Sprite2D" parent="Pipes/Top" unique_id=528371743]
-z_index = -3
-z_as_relative = false
-y_sort_enabled = true
-position = Vector2(0, -1300)
-scale = Vector2(5, 400)
-texture = ExtResource("15_6v4vb")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Pipes/Top" unique_id=242810699]
-polygon = PackedVector2Array(-70, -25, 70, -25, 70, -75, 65, -75, 65, -80, 60, -80, 60, -2500, -60, -2500, -60, -80, -65, -80, -65, -75, -70, -75)
-
-[node name="Bottom" type="StaticBody2D" parent="Pipes" unique_id=707139206 groups=["Damageable"]]
-position = Vector2(0, 150)
-collision_layer = 2
-collision_mask = 2
-
-[node name="Head" type="Sprite2D" parent="Pipes/Bottom" unique_id=1964014451]
-z_index = -3
-z_as_relative = false
-y_sort_enabled = true
-position = Vector2(0, 50)
-scale = Vector2(5, 5)
-texture = ExtResource("5_crjma")
-
-[node name="Body" type="Sprite2D" parent="Pipes/Bottom" unique_id=885453812]
-z_index = -3
-z_as_relative = false
-y_sort_enabled = true
-position = Vector2(0, 1299.9999)
-scale = Vector2(5, 400)
-texture = ExtResource("15_6v4vb")
-
-[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Pipes/Bottom" unique_id=534320534]
-position = Vector2(0, 1299.9999)
-scale = Vector2(5, 400)
-polygon = PackedVector2Array(-14, -3.1875, 14, -3.1875, 14, -3.0625, 13, -3.0625, 13, -3.05, 12, -3.05, 12, 3.0000005, -12, 3.0000005, -12, -3.05, -13, -3.05, -13, -3.0625, -14, -3.0625)
+[node name="Pipes4" parent="." unique_id=1915745487 instance=ExtResource("15_fplra")]
+position = Vector2(1477, 0)
+height = -50.0
+gap = 150.0
 
 [node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1871629618]
 
@@ -262,7 +230,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Score" unique_id=1689717494]
+[node name="Label" type="Label" parent="CanvasLayer/Score" unique_id=1689717494 node_paths=PackedStringArray("player")]
 custom_minimum_size = Vector2(0, 300)
 layout_mode = 2
 size_flags_vertical = 2
@@ -275,6 +243,8 @@ text_overrun_behavior = 1
 ellipsis_char = ""
 max_lines_visible = 1
 visible_characters = 3
+script = ExtResource("19_4n06y")
+player = NodePath("../../../Player")
 
 [node name="Respawn" type="Panel" parent="CanvasLayer" unique_id=733397662]
 visible = false
