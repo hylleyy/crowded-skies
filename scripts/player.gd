@@ -105,7 +105,7 @@ func _die() -> void:
 	if not is_control_enabled: return
 	is_control_enabled = false
 
-	var launch_direction : Vector2 = -transform.x
+	var launch_direction : Vector2 = -transform.x # we'll use transform rotation in case godot physics engine zero out the velocity on collision
 	velocity = launch_direction * (repulsion_force / 2)
 
 	sprite.texture = dead_texture
