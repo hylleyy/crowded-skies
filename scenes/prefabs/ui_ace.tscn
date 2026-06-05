@@ -1,0 +1,7 @@
+[gd_scene format=3 uid="uid://drtp6kai0qskr"]
+
+[ext_resource type="Texture2D" uid="uid://bc0a1hql4wtj4" path="res://assets/artwork/birds/ace.tres" id="1_hdnsk"]
+
+[node name="Ace" type="TextureRect" unique_id=1455493648]
+texture = ExtResource("1_hdnsk")
+expand_mode = 3

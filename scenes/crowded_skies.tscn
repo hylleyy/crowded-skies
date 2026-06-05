@@ -16,9 +16,10 @@
 [ext_resource type="AudioStream" uid="uid://n8vf0qntuayh" path="res://assets/sound/effects/score.mp3" id="13_fkwrg"]
 [ext_resource type="PackedScene" uid="uid://brckemi80fsna" path="res://scenes/prefabs/pipes.tscn" id="15_fplra"]
 [ext_resource type="Texture2D" uid="uid://b66go6ja2wwty" path="res://assets/artwork/parallax/sunset/parallax_0.png" id="15_hr8dd"]
+[ext_resource type="Script" uid="uid://c8sxsjuqopa2f" path="res://scripts/user_interface_layer.gd" id="16_fkwrg"]
+[ext_resource type="PackedScene" uid="uid://drtp6kai0qskr" path="res://scenes/prefabs/ui_ace.tscn" id="18_fkwrg"]
 [ext_resource type="FontFile" uid="uid://cyi534ybc1xkx" path="res://assets/fonts/pixel_operator/PixelOperatorMono8-Bold.ttf" id="18_l1i55"]
 [ext_resource type="FontFile" uid="uid://bv6fegciausty" path="res://assets/fonts/pixel_operator/PixelOperatorSC.ttf" id="19_4h73g"]
-[ext_resource type="Script" uid="uid://b17nadhuacqau" path="res://scripts/score_label.gd" id="19_4n06y"]
 [ext_resource type="Texture2D" uid="uid://dv5m8utphcfgn" path="res://assets/artwork/parallax/sunset/parallax_3.png" id="21_fkwrg"]
 [ext_resource type="Texture2D" uid="uid://84k068el34cr" path="res://assets/artwork/parallax/sunset/parallax_1.png" id="22_4n06y"]
 [ext_resource type="Texture2D" uid="uid://r647cw1b43ym" path="res://assets/artwork/parallax/sunset/parallax_2.png" id="23_wpp8p"]
@@ -126,6 +127,8 @@ shadow_size = 30
 shadow_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 shadow_offset = Vector2(8, 8)
 
+[sub_resource type="GDScript" id="GDScript_4n06y"]
+
 [sub_resource type="LabelSettings" id="LabelSettings_hr8dd"]
 font = ExtResource("19_4h73g")
 font_size = 70
@@ -146,6 +149,7 @@ texture_filter = 1
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_7ru30")
+aces = 3
 active_texture = ExtResource("2_hbvat")
 dead_texture = ExtResource("2_d1ofk")
 feather_textures = Array[Texture2D]([ExtResource("6_4xkvg"), ExtResource("7_5kejv"), ExtResource("8_en01c")])
@@ -218,18 +222,16 @@ position = Vector2(1477, 0)
 height = -50.0
 gap = 150.0
 
-[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=1871629618]
+[node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618 node_paths=PackedStringArray("player")]
+script = ExtResource("16_fkwrg")
+player = NodePath("../Player")
 
-[node name="Score" type="VBoxContainer" parent="CanvasLayer" unique_id=1167995902]
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Label" type="Label" parent="CanvasLayer/Score" unique_id=1689717494 node_paths=PackedStringArray("player")]
+[node name="Score" type="Label" parent="UserInterfaceLayer" unique_id=1689717494]
 custom_minimum_size = Vector2(0, 300)
-layout_mode = 2
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 80.0
+grow_horizontal = 2
 size_flags_vertical = 2
 text = "000"
 label_settings = SubResource("LabelSettings_4h73g")
@@ -240,10 +242,31 @@ text_overrun_behavior = 1
 ellipsis_char = ""
 max_lines_visible = 1
 visible_characters = 3
-script = ExtResource("19_4n06y")
-player = NodePath("../../../Player")
+script = SubResource("GDScript_4n06y")
 
-[node name="Respawn" type="Panel" parent="CanvasLayer" unique_id=733397662]
+[node name="Aces" type="MarginContainer" parent="UserInterfaceLayer" unique_id=736681334]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 150)
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterfaceLayer/Aces" unique_id=1188560364]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="Ace" parent="UserInterfaceLayer/Aces/HBoxContainer" unique_id=1455493648 instance=ExtResource("18_fkwrg")]
+layout_mode = 2
+
+[node name="Respawn" type="Panel" parent="UserInterfaceLayer" unique_id=733397662]
 visible = false
 anchors_preset = 15
 anchor_right = 1.0
@@ -251,7 +274,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="CenterContainer" type="CenterContainer" parent="CanvasLayer/Respawn" unique_id=1040202052]
+[node name="CenterContainer" type="CenterContainer" parent="UserInterfaceLayer/Respawn" unique_id=1040202052]
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
@@ -259,10 +282,10 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/Respawn/CenterContainer" unique_id=101741003]
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterfaceLayer/Respawn/CenterContainer" unique_id=101741003]
 layout_mode = 2
 
-[node name="Label" type="Label" parent="CanvasLayer/Respawn/CenterContainer/VBoxContainer" unique_id=137513859]
+[node name="Label" type="Label" parent="UserInterfaceLayer/Respawn/CenterContainer/VBoxContainer" unique_id=137513859]
 layout_mode = 2
 text = "Respawning in..."
 label_settings = SubResource("LabelSettings_hr8dd")
@@ -271,7 +294,7 @@ vertical_alignment = 1
 justification_flags = 0
 ellipsis_char = ""
 
-[node name="Countdown" type="Label" parent="CanvasLayer/Respawn/CenterContainer/VBoxContainer" unique_id=2004255850]
+[node name="Countdown" type="Label" parent="UserInterfaceLayer/Respawn/CenterContainer/VBoxContainer" unique_id=2004255850]
 custom_minimum_size = Vector2(500, 350)
 layout_mode = 2
 size_flags_vertical = 2

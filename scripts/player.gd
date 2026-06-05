@@ -19,10 +19,19 @@ class_name Player
 signal jump
 ## Emitted when the player enters the dead state.
 signal died
+## Emitted when the player takes damage.
+signal damaged(aces_left : int)
 ## Emitted when colliding with another player instance.
 signal remote_player_knockback
 ## Emitted when player score changes.
 signal score_changed(score : int)
+
+@export_group('Experience')
+## The amount of damage a player can take before dying. Change this to change the starter aces.
+@export var aces : int = 1
+## The amount of score the player has to use along the game (works like the game currency). Change this to set the starter score.
+@export var score : int = 0
+
 
 @export_group('Arcade Physics')
 ## The upward velocity applied on jump execution.
@@ -54,7 +63,6 @@ static var static_jump_force : float
 var original_scale : Vector2
 var cooldown_timer : float = 0.0
 var is_control_enabled : bool = true
-var score : int = 0
 
 # Dependencies
 @onready var sprite : Sprite2D = $Sprite2D
@@ -80,7 +88,9 @@ func _ready() -> void:
 			wings_animator.play('RESET')
 	)
 
-	visible_on_screen_notificer.screen_exited.connect(_die)
+	visible_on_screen_notificer.screen_exited.connect(func() : _take_damage(99999))
+
+	if aces <= 0: _take_damage() # in case my dumbass set player lives to 0 by accident
 
 func _process(delta : float) -> void:
 	if not is_control_enabled: return
@@ -101,16 +111,29 @@ func _physics_process(delta : float) -> void:
 	_handle_direction_and_rotation(delta)
 	_process_collisions()
 
+func _take_damage(amount : int = 1) -> void:
+	if not is_control_enabled: return
+
+	var launch_direction : Vector2 = -transform.x # we'll use transform rotation in case godot physics engine zero out the velocity on collision
+	velocity = launch_direction * (repulsion_force / 2)
+	sound_fall.play()
+
+	if aces - amount <= 0:
+		aces = 0
+		damaged.emit(0)
+		_die()
+		return
+
+	aces -= amount
+	print(aces)
+	damaged.emit(aces)
+
 func _die() -> void:
 	if not is_control_enabled: return
 	is_control_enabled = false
 
-	var launch_direction : Vector2 = -transform.x # we'll use transform rotation in case godot physics engine zero out the velocity on collision
-	velocity = launch_direction * (repulsion_force / 2)
-
 	sprite.texture = dead_texture
 	died.emit()
-	sound_fall.play()
 	wings_container.hide()
 
 # inputs
@@ -180,7 +203,9 @@ func _process_collisions() -> void:
 		if not collider: continue
 
 		if collider.is_in_group('Players'): _handle_knockback(collider)
-		elif collider.is_in_group('Damageable') and is_control_enabled: _die()
+		elif collider.is_in_group('Damageable') and is_control_enabled:
+			_take_damage()
+			break # often godot will generate multiple collision contacts in a single physics call, this break prevents double damage
 
 func _handle_knockback(collider : Node2D) -> void:
 	var push_direction : Vector2 = (global_position - collider.global_position).normalized()
