@@ -1,3 +1,5 @@
+<img width="540" height="1170" alt="ezgif-2b4f1ba573c7f947" src="https://github.com/user-attachments/assets/41831d68-5fec-473c-b27e-f9f9c365ece1" />
+
 # Crowded Skies
 
 An elegant, fast-paced local multiplayer 2D arcade game built with **Godot Engine 4**. In *Crowded Skies*, players control avian characters, navigating the arena using momentum-based jumping and flying physics while interacting with other players through intense kinetic collisions.
