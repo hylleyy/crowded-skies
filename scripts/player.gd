@@ -29,6 +29,10 @@ signal remote_player_knockback
 signal score_changed(score : int)
 ## Emitted when player dies and the internal respawn countdown begins counting
 signal respawn_countdown(remaining : int)
+## Emitted when the player exits the camera view.
+signal exit_view
+## Emitted when the player enters the camera view.
+signal enter_view
 
 @export_group('Experience')
 ## The amount of damage a player can take before dying. Change this to change the starter aces.
@@ -68,7 +72,6 @@ static var static_jump_force : float
 var original_scale : Vector2
 var cooldown_timer : float = 0.0
 var is_control_enabled : bool = true
-var allowed_to_teleport : bool = false
 
 # Dependencies
 @onready var sprite : Sprite2D = $Sprite2D
@@ -94,14 +97,13 @@ func _ready() -> void:
 			wings_animator.play('RESET')
 	)
 
-	visible_on_screen_notificer.screen_exited.connect(func():
-		if allowed_to_teleport:
-			allowed_to_teleport = false
-			return
+	visible_on_screen_notificer.screen_exited.connect(exit_view.emit)
+	visible_on_screen_notificer.screen_entered.connect(enter_view.emit)
+	
+	exit_view.connect(func():
+		if not is_control_enabled: return
 		_take_damage(99999)
 	)
-
-	visible_on_screen_notificer.screen_entered.connect(func(): allowed_to_teleport = false)
 
 	if aces <= 0: _take_damage() # in case my dumbass set player lives to 0 by accident
 
@@ -169,10 +171,9 @@ func _begin_respawn_sequence() -> void:
 
 	sprite.texture = active_texture
 	wings_container.show()
-	is_control_enabled = true
 	position = Vector2.ZERO
 	velocity = Vector2.UP * jump_force
-	allowed_to_teleport = true
+	is_control_enabled = true # TO-DO: if the player dies too far from Vector2.ZERO they end up exiting the camera view, so it triggers another death. Need to fix that later
 	aces = 1
 
 	respawned.emit()
