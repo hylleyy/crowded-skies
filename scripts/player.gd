@@ -20,7 +20,7 @@ signal jump
 ## Emitted when the player enters the dead state.
 signal died
 ## Emitted when colliding with another player instance.
-signal hit_remote_player
+signal remote_player_knockback
 ## Emitted when player score changes.
 signal score_changed(score : int)
 
@@ -62,6 +62,7 @@ var score : int = 0
 @onready var tails_container : Node2D = $Tail
 @onready var wings_container : Node2D = $Wings
 @onready var wings_animator : AnimationPlayer = $Wings/AnimationPlayer
+@onready var visible_on_screen_notificer : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 # Sound effects
 @onready var sound_woosh : AudioStreamPlayer2D = $Sounds/Wosh
@@ -78,6 +79,8 @@ func _ready() -> void:
 		if anim_name != 'RESET':
 			wings_animator.play('RESET')
 	)
+
+	visible_on_screen_notificer.screen_exited.connect(_die)
 
 func _process(delta : float) -> void:
 	if not is_control_enabled: return
@@ -99,11 +102,16 @@ func _physics_process(delta : float) -> void:
 	_process_collisions()
 
 func _die() -> void:
+	if not is_control_enabled: return
 	is_control_enabled = false
+
+	var launch_direction : Vector2 = -transform.x
+	velocity = launch_direction * (repulsion_force / 2)
+
 	sprite.texture = dead_texture
+	died.emit()
 	sound_fall.play()
 	wings_container.hide()
-	died.emit()
 
 # inputs
 
@@ -148,8 +156,8 @@ func _execute_jump(direction : int) -> void:
 	velocity.x = current_forward_force * direction
 
 	# juice
-	_play_jump_effects(direction)
 	jump.emit()
+	_play_jump_effects(direction)
 
 func _handle_direction_and_rotation(delta : float) -> void:
 	if not is_control_enabled: return
@@ -171,14 +179,14 @@ func _process_collisions() -> void:
 		var collider := collision_data.get_collider() as Node
 		if not collider: continue
 
-		if collider.is_in_group('Players'): _handle_remote_player_collision(collider)
+		if collider.is_in_group('Players'): _handle_knockback(collider)
 		elif collider.is_in_group('Damageable') and is_control_enabled: _die()
 
-func _handle_remote_player_collision(collider : Node2D) -> void:
-	sound_hit.play()
+func _handle_knockback(collider : Node2D) -> void:
 	var push_direction : Vector2 = (global_position - collider.global_position).normalized()
 	velocity = push_direction * repulsion_force
-	hit_remote_player.emit()
+	remote_player_knockback.emit()
+	sound_hit.play()
 
 # juice
 

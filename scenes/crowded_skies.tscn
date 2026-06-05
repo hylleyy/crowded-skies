@@ -5,7 +5,6 @@
 [ext_resource type="Texture2D" uid="uid://b8lcx3f2vsa33" path="res://assets/artwork/birds/Flapper/bird.tres" id="2_hbvat"]
 [ext_resource type="Texture2D" uid="uid://dggen7n830v2i" path="res://assets/artwork/birds/Flapper/wings_0.tres" id="3_c04qw"]
 [ext_resource type="Script" uid="uid://7lqni56gud7r" path="res://scripts/camera.gd" id="3_qmrwl"]
-[ext_resource type="Script" uid="uid://bu12nmwm3dy0u" path="res://scripts/screen_boundaries.gd" id="4_77ftd"]
 [ext_resource type="Texture2D" uid="uid://bsfgvuagmp5ay" path="res://assets/artwork/birds/Flapper/wings_1.tres" id="4_w82wt"]
 [ext_resource type="Texture2D" uid="uid://cmput8pioxn2h" path="res://assets/artwork/birds/Flapper/wings_2.tres" id="5_4xkvg"]
 [ext_resource type="Texture2D" uid="uid://cckl2pc5pgbg0" path="res://assets/artwork/birds/Flapper/feathers_0.tres" id="6_4xkvg"]
@@ -194,14 +193,12 @@ volume_db = 5.0
 stream = ExtResource("13_fkwrg")
 volume_db = 5.0
 
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Player" unique_id=1094777258]
+rect = Rect2(-35, -40, 65, 75)
+
 [node name="Camera2D" type="Camera2D" parent="." unique_id=320330791 node_paths=PackedStringArray("target")]
 script = ExtResource("3_qmrwl")
 target = NodePath("../Player")
-
-[node name="ScreenBoundaries" type="StaticBody2D" parent="Camera2D" unique_id=838780447]
-collision_layer = 2
-collision_mask = 2
-script = ExtResource("4_77ftd")
 
 [node name="Pipes" parent="." unique_id=1848497384 instance=ExtResource("15_fplra")]
 position = Vector2(300, 0)
