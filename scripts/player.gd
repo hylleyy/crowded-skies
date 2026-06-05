@@ -112,6 +112,7 @@ func _physics_process(delta : float) -> void:
 	_process_collisions()
 
 func _take_damage(amount : int = 1) -> void:
+	# TO-DO: there is a bug of multiple collision when holding screen & hiting obstacle, need to add colldown for damage too
 	if not is_control_enabled: return
 
 	var launch_direction : Vector2 = -transform.x # we'll use transform rotation in case godot physics engine zero out the velocity on collision
@@ -183,7 +184,7 @@ func _execute_jump(direction : int) -> void:
 	_play_jump_effects(direction)
 
 func _handle_direction_and_rotation(delta : float) -> void:
-	if not is_control_enabled: return
+	# if not is_control_enabled: return
 
 	if velocity.x != 0: sprite.flip_h = velocity.x < 0
 	var direction_sign : float = -1.0 if sprite.flip_h else 1.0
