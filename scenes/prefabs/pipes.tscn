@@ -1,0 +1,69 @@
+[gd_scene format=3 uid="uid://brckemi80fsna"]
+
+[ext_resource type="Script" uid="uid://bd0nb85jiedx8" path="res://scripts/pipes.gd" id="1_2tcbs"]
+[ext_resource type="Texture2D" uid="uid://5t2wmaqr3ov1" path="res://assets/artwork/obstacles/pipes/sunset_head.tres" id="2_fkxfj"]
+[ext_resource type="Texture2D" uid="uid://cffi42nopunf0" path="res://assets/artwork/obstacles/pipes/sunset_body.tres" id="3_13xkq"]
+
+[sub_resource type="SegmentShape2D" id="SegmentShape2D_4n06y"]
+resource_local_to_scene = true
+a = Vector2(0, -150)
+b = Vector2(0, 150)
+
+[node name="Pipes" type="Node2D" unique_id=1848497384]
+texture_filter = 1
+script = ExtResource("1_2tcbs")
+
+[node name="Top" type="StaticBody2D" parent="." unique_id=602694648 groups=["Damageable"]]
+position = Vector2(0, -150)
+collision_layer = 2
+collision_mask = 2
+
+[node name="Head" type="Sprite2D" parent="Top" unique_id=379644708]
+z_index = -3
+position = Vector2(0, -50)
+rotation = 3.1415925
+scale = Vector2(5, 5)
+texture = ExtResource("2_fkxfj")
+flip_h = true
+
+[node name="Body" type="Sprite2D" parent="Top" unique_id=1376412105]
+z_index = -3
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(0, -1300)
+scale = Vector2(5, 400)
+texture = ExtResource("3_13xkq")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Top" unique_id=1381334920]
+polygon = PackedVector2Array(-70, -25, 70, -25, 70, -75, 65, -75, 65, -80, 60, -80, 60, -2500, -60, -2500, -60, -80, -65, -80, -65, -75, -70, -75)
+
+[node name="Bottom" type="StaticBody2D" parent="." unique_id=2055478190 groups=["Damageable"]]
+position = Vector2(0, 150)
+collision_layer = 2
+collision_mask = 2
+
+[node name="Head" type="Sprite2D" parent="Bottom" unique_id=2146430359]
+z_index = -3
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(0, 50)
+scale = Vector2(5, 5)
+texture = ExtResource("2_fkxfj")
+
+[node name="Body" type="Sprite2D" parent="Bottom" unique_id=2082278032]
+z_index = -3
+z_as_relative = false
+y_sort_enabled = true
+position = Vector2(0, 1299.9999)
+scale = Vector2(5, 400)
+texture = ExtResource("3_13xkq")
+
+[node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bottom" unique_id=1266374994]
+position = Vector2(0, 1299.9999)
+scale = Vector2(5, 400)
+polygon = PackedVector2Array(-14, -3.1875, 14, -3.1875, 14, -3.0625, 13, -3.0625, 13, -3.05, 12, -3.05, 12, 3.0000005, -12, 3.0000005, -12, -3.05, -13, -3.05, -13, -3.0625, -14, -3.0625)
+
+[node name="Area2D" type="Area2D" parent="." unique_id=640848986]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1888036245]
+shape = SubResource("SegmentShape2D_4n06y")
