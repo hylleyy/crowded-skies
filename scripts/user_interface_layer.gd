@@ -10,6 +10,7 @@ var ace_prefab : PackedScene = preload('res://scenes/prefabs/ui_ace.tscn')
 @onready var aces_hblist : HBoxContainer = $Aces/HBoxContainer
 @onready var game_over_screen : Control = $GameOver
 @onready var respawn_countdown : Label = $GameOver/CenterContainer/VBoxContainer/Countdown
+@onready var main_menu_group : Control = $MainMenu
 
 func _ready() -> void:
 	player.score_changed.connect(_update_score_ui)
@@ -57,3 +58,10 @@ func _on_player_die() -> void:
 func _on_player_repawn() -> void:
 	game_over_screen.hide()
 	_refresh_ui()
+
+func _input(event: InputEvent) -> void:
+	if not main_menu_group.visible: return
+	if not event is InputEventMouseButton: return
+	if not event.pressed: return
+	if event.button_index != MOUSE_BUTTON_LEFT: return
+	main_menu_group.hide()
