@@ -7,8 +7,10 @@
 [ext_resource type="AudioStream" uid="uid://c01g66bycu607" path="res://assets/sound/effects/fall.mp3" id="10_jdgwk"]
 [ext_resource type="AudioStream" uid="uid://42qd58b36kee" path="res://assets/sound/effects/hit.wav" id="11_cxrsx"]
 [ext_resource type="AudioStream" uid="uid://n8vf0qntuayh" path="res://assets/sound/effects/score.mp3" id="13_fkwrg"]
+[ext_resource type="Texture2D" uid="uid://b8ni7rnx6aebv" path="res://assets/artwork/branding/crowded_skies.png" id="14_dqm64"]
 [ext_resource type="PackedScene" uid="uid://brckemi80fsna" path="res://scenes/prefabs/pipes.tscn" id="15_fplra"]
 [ext_resource type="Texture2D" uid="uid://b66go6ja2wwty" path="res://assets/artwork/parallax/sunset/parallax_0.png" id="15_hr8dd"]
+[ext_resource type="FontFile" uid="uid://i7jh7pi3cu7s" path="res://assets/fonts/pixel_operator/PixelOperator.ttf" id="15_mlqko"]
 [ext_resource type="Script" uid="uid://c8sxsjuqopa2f" path="res://scripts/user_interface_layer.gd" id="16_fkwrg"]
 [ext_resource type="PackedScene" uid="uid://drtp6kai0qskr" path="res://scenes/prefabs/ui_ace.tscn" id="18_fkwrg"]
 [ext_resource type="FontFile" uid="uid://cyi534ybc1xkx" path="res://assets/fonts/pixel_operator/PixelOperatorMono8-Bold.ttf" id="18_l1i55"]
@@ -187,6 +189,15 @@ shadow_size = 80
 shadow_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 shadow_offset = Vector2(8, 8)
 
+[sub_resource type="LabelSettings" id="LabelSettings_6ysw1"]
+font = ExtResource("15_mlqko")
+font_size = 80
+outline_size = 40
+outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+shadow_size = 40
+shadow_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+shadow_offset = Vector2(10, 10)
+
 [node name="Crowded Skies" type="Node2D" unique_id=1808951590]
 texture_filter = 1
 
@@ -259,6 +270,7 @@ script = ExtResource("16_fkwrg")
 player = NodePath("../Player")
 
 [node name="Score" type="Label" parent="UserInterfaceLayer" unique_id=1689717494]
+visible = false
 custom_minimum_size = Vector2(0, 300)
 anchors_preset = 10
 anchor_right = 1.0
@@ -340,6 +352,45 @@ text_overrun_behavior = 1
 ellipsis_char = ""
 max_lines_visible = 1
 visible_characters = 2
+
+[node name="Main Menu" type="Control" parent="UserInterfaceLayer" unique_id=1935449439]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="MarginContainer" type="MarginContainer" parent="UserInterfaceLayer/Main Menu" unique_id=479909428]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterfaceLayer/Main Menu/MarginContainer" unique_id=143000432]
+layout_mode = 2
+
+[node name="CINEMA" type="TextureRect" parent="UserInterfaceLayer/Main Menu/MarginContainer/VBoxContainer" unique_id=51977016]
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+texture = ExtResource("14_dqm64")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UserInterfaceLayer/Main Menu/MarginContainer/VBoxContainer" unique_id=1571336393]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Tap anywere to play"
+label_settings = SubResource("LabelSettings_6ysw1")
+horizontal_alignment = 1
+vertical_alignment = 1
 
 [node name="Parallax" type="Node2D" parent="." unique_id=1614123703]
 
