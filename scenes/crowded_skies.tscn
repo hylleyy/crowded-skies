@@ -1,15 +1,8 @@
 [gd_scene format=3 uid="uid://cav6bmpqa8odc"]
 
 [ext_resource type="Script" uid="uid://dwfsc0uhh1c1n" path="res://scripts/player.gd" id="1_7ru30"]
-[ext_resource type="Texture2D" uid="uid://b60b08chm7mte" path="res://assets/artwork/birds/Flapper/dead.tres" id="2_d1ofk"]
-[ext_resource type="Texture2D" uid="uid://b8lcx3f2vsa33" path="res://assets/artwork/birds/Flapper/bird.tres" id="2_hbvat"]
-[ext_resource type="Texture2D" uid="uid://dggen7n830v2i" path="res://assets/artwork/birds/Flapper/wings_0.tres" id="3_c04qw"]
+[ext_resource type="Texture2D" uid="uid://df5q58kq1jysu" path="res://assets/artwork/spritesheet.png" id="2_ov7bs"]
 [ext_resource type="Script" uid="uid://7lqni56gud7r" path="res://scripts/camera.gd" id="3_qmrwl"]
-[ext_resource type="Texture2D" uid="uid://bsfgvuagmp5ay" path="res://assets/artwork/birds/Flapper/wings_1.tres" id="4_w82wt"]
-[ext_resource type="Texture2D" uid="uid://cmput8pioxn2h" path="res://assets/artwork/birds/Flapper/wings_2.tres" id="5_4xkvg"]
-[ext_resource type="Texture2D" uid="uid://cckl2pc5pgbg0" path="res://assets/artwork/birds/Flapper/feathers_0.tres" id="6_4xkvg"]
-[ext_resource type="Texture2D" uid="uid://b8ycmc517w3kr" path="res://assets/artwork/birds/Flapper/feathers_1.tres" id="7_5kejv"]
-[ext_resource type="Texture2D" uid="uid://bos2sfp3nwepw" path="res://assets/artwork/birds/Flapper/feathers_2.tres" id="8_en01c"]
 [ext_resource type="AudioStream" uid="uid://blj7al8jnchgt" path="res://assets/sound/effects/wosh.wav" id="9_6v4vb"]
 [ext_resource type="AudioStream" uid="uid://c01g66bycu607" path="res://assets/sound/effects/fall.mp3" id="10_jdgwk"]
 [ext_resource type="AudioStream" uid="uid://42qd58b36kee" path="res://assets/sound/effects/hit.wav" id="11_cxrsx"]
@@ -20,7 +13,7 @@
 [ext_resource type="PackedScene" uid="uid://drtp6kai0qskr" path="res://scenes/prefabs/ui_ace.tscn" id="18_fkwrg"]
 [ext_resource type="FontFile" uid="uid://cyi534ybc1xkx" path="res://assets/fonts/pixel_operator/PixelOperatorMono8-Bold.ttf" id="18_l1i55"]
 [ext_resource type="FontFile" uid="uid://bv6fegciausty" path="res://assets/fonts/pixel_operator/PixelOperatorSC.ttf" id="19_4h73g"]
-[ext_resource type="Shader" uid="uid://2t5oo5ol3pef" path="res://blur.gdshader" id="19_4n06y"]
+[ext_resource type="Shader" uid="uid://2t5oo5ol3pef" path="res://scripts/blur.gdshader" id="19_4n06y"]
 [ext_resource type="Texture2D" uid="uid://dv5m8utphcfgn" path="res://assets/artwork/parallax/sunset/parallax_3.png" id="21_fkwrg"]
 [ext_resource type="Texture2D" uid="uid://84k068el34cr" path="res://assets/artwork/parallax/sunset/parallax_1.png" id="22_4n06y"]
 [ext_resource type="Texture2D" uid="uid://r647cw1b43ym" path="res://assets/artwork/parallax/sunset/parallax_2.png" id="23_wpp8p"]
@@ -29,9 +22,37 @@
 [ext_resource type="Texture2D" uid="uid://jy75uqk6oe6q" path="res://assets/artwork/parallax/sunset/parallax_6.png" id="26_heara"]
 [ext_resource type="Texture2D" uid="uid://r5ba7i4664x8" path="res://assets/artwork/parallax/sunset/parallax_7.png" id="27_jwfet"]
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_dqm64"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(1, 2, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_mlqko"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(60, 2, 16, 16)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ysw1"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(46, 3, 4, 3)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_yld4r"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(53, 3, 3, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fplra"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(46, 9, 4, 3)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_fkwrg"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(1, 2, 16, 16)
+
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_d1ofk"]
 radius = 34.0
 height = 83.0
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_4n06y"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(22, 2, 7, 6)
 
 [sub_resource type="Animation" id="Animation_2p56t"]
 length = 0.001
@@ -46,7 +67,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_c04qw")]
+"values": [SubResource("AtlasTexture_4n06y")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -73,6 +94,22 @@ tracks/2/keys = {
 "values": [20.0]
 }
 
+[sub_resource type="AtlasTexture" id="AtlasTexture_wpp8p"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(22, 2, 7, 6)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ohr8t"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(22, 11, 7, 4)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y5ub7"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(33, 2, 7, 5)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_heara"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(22, 11, 7, 4)
+
 [sub_resource type="Animation" id="Animation_5kejv"]
 resource_name = "flap"
 length = 4.0
@@ -86,7 +123,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1, 2, 3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("3_c04qw"), ExtResource("4_w82wt"), ExtResource("5_4xkvg"), ExtResource("4_w82wt")]
+"values": [SubResource("AtlasTexture_wpp8p"), SubResource("AtlasTexture_ohr8t"), SubResource("AtlasTexture_y5ub7"), SubResource("AtlasTexture_heara")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -158,15 +195,16 @@ rotation = -0.0025663683
 collision_layer = 3
 collision_mask = 3
 script = ExtResource("1_7ru30")
-respawn_delay = 5
-active_texture = ExtResource("2_hbvat")
-dead_texture = ExtResource("2_d1ofk")
-feather_textures = Array[Texture2D]([ExtResource("6_4xkvg"), ExtResource("7_5kejv"), ExtResource("8_en01c")])
+aces = 3
+respawn_delay = 0
+active_texture = SubResource("AtlasTexture_dqm64")
+dead_texture = SubResource("AtlasTexture_mlqko")
+feather_textures = Array[Texture2D]([SubResource("AtlasTexture_6ysw1"), SubResource("AtlasTexture_yld4r"), SubResource("AtlasTexture_fplra")])
 
 [node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1953179067]
 y_sort_enabled = true
 scale = Vector2(5, 5)
-texture = ExtResource("2_hbvat")
+texture = SubResource("AtlasTexture_fkwrg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1409241716]
 position = Vector2(-2.5, 0)
@@ -179,7 +217,7 @@ position = Vector2(-42.5, -5)
 [node name="Sprite2D" type="Sprite2D" parent="Player/Wings" unique_id=241912309]
 position = Vector2(0, 20)
 scale = Vector2(5, 5)
-texture = ExtResource("3_c04qw")
+texture = SubResource("AtlasTexture_4n06y")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Wings" unique_id=1521059189]
 root_node = NodePath("../Sprite2D")
@@ -190,21 +228,21 @@ speed_scale = 20.0
 
 [node name="Sounds" type="Node2D" parent="Player" unique_id=2018901456]
 
-[node name="Wosh" type="AudioStreamPlayer2D" parent="Player/Sounds" unique_id=693258531]
+[node name="Wosh" type="AudioStreamPlayer" parent="Player/Sounds" unique_id=1809786001]
 stream = ExtResource("9_6v4vb")
-volume_db = 24.0
+volume_db = 12.0
 
-[node name="Fall" type="AudioStreamPlayer2D" parent="Player/Sounds" unique_id=1002650150]
+[node name="Fall" type="AudioStreamPlayer" parent="Player/Sounds" unique_id=1387452168]
 stream = ExtResource("10_jdgwk")
-volume_db = 8.0
+volume_db = 4.0
 
-[node name="Hit" type="AudioStreamPlayer2D" parent="Player/Sounds" unique_id=1749050622]
+[node name="Hit" type="AudioStreamPlayer" parent="Player/Sounds" unique_id=1834268192]
 stream = ExtResource("11_cxrsx")
-volume_db = 5.0
+volume_db = 2.5
 
-[node name="Score" type="AudioStreamPlayer2D" parent="Player/Sounds" unique_id=1415894485]
+[node name="Score" type="AudioStreamPlayer" parent="Player/Sounds" unique_id=388639007]
 stream = ExtResource("13_fkwrg")
-volume_db = 5.0
+volume_db = 2.5
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Player" unique_id=1094777258]
 rect = Rect2(-35, -40, 65, 75)
@@ -215,21 +253,6 @@ target = NodePath("../Player")
 
 [node name="Pipes" parent="." unique_id=1848497384 instance=ExtResource("15_fplra")]
 position = Vector2(300, 0)
-
-[node name="Pipes2" parent="." unique_id=908272634 instance=ExtResource("15_fplra")]
-position = Vector2(718, 0)
-height = -200.0
-gap = 250.0
-
-[node name="Pipes3" parent="." unique_id=1031978866 instance=ExtResource("15_fplra")]
-position = Vector2(1117, 0)
-height = 200.0
-gap = 200.0
-
-[node name="Pipes4" parent="." unique_id=1915745487 instance=ExtResource("15_fplra")]
-position = Vector2(1477, 0)
-height = -50.0
-gap = 150.0
 
 [node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618 node_paths=PackedStringArray("player")]
 script = ExtResource("16_fkwrg")

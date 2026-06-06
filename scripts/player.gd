@@ -82,10 +82,10 @@ var is_control_enabled : bool = true
 @onready var visible_on_screen_notificer : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
 # Sound effects
-@onready var sound_woosh : AudioStreamPlayer2D = $Sounds/Wosh
-@onready var sound_hit : AudioStreamPlayer2D = $Sounds/Hit
-@onready var sound_fall : AudioStreamPlayer2D = $Sounds/Fall
-@onready var sound_score : AudioStreamPlayer2D = $Sounds/Score
+@onready var sound_woosh : AudioStreamPlayer = $Sounds/Wosh
+@onready var sound_hit : AudioStreamPlayer = $Sounds/Hit
+@onready var sound_fall : AudioStreamPlayer = $Sounds/Fall
+@onready var sound_score : AudioStreamPlayer = $Sounds/Score
 
 func _ready() -> void:
 	sprite.texture = active_texture

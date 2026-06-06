@@ -1,7 +1,109 @@
 [gd_scene format=3 uid="uid://drtp6kai0qskr"]
 
-[ext_resource type="Texture2D" uid="uid://bc0a1hql4wtj4" path="res://assets/artwork/birds/ace.tres" id="1_hdnsk"]
+[ext_resource type="Texture2D" uid="uid://df5q58kq1jysu" path="res://assets/artwork/spritesheet.png" id="1_hdnsk"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_y7j86"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(82, 2, 19, 25)
+
+[sub_resource type="Animation" id="Animation_c1gpu"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [SubResource("AtlasTexture_y7j86")]
+}
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_o7gm3"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(82, 2, 19, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wtsqv"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(82, 2, 19, 25)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05vk1"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(102, 2, 15, 25)
+margin = Rect2(2, 0, 4, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2y3vi"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(118, 2, 11, 25)
+margin = Rect2(4, 0, 8, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ism4h"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(130, 2, 7, 25)
+margin = Rect2(6, 0, 12, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1q2sq"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(138, 2, 3, 25)
+margin = Rect2(8, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_1j210"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(82, 28, 3, 25)
+margin = Rect2(8, 0, 16, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e38hm"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(86, 28, 7, 25)
+margin = Rect2(6, 0, 12, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_m6jp1"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(94, 28, 11, 25)
+margin = Rect2(4, 0, 8, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_e1eki"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(106, 28, 15, 25)
+margin = Rect2(2, 0, 4, 0)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_c6kba"]
+atlas = ExtResource("1_hdnsk")
+region = Rect2(122, 28, 19, 25)
+
+[sub_resource type="Animation" id="Animation_5wvt2"]
+resource_name = "spinny"
+length = 24.0
+loop_mode = 2
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath(".:texture")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 14.9, 15, 16, 17, 18, 19, 19.999998, 21, 22, 23),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 1,
+"values": [SubResource("AtlasTexture_o7gm3"), SubResource("AtlasTexture_wtsqv"), SubResource("AtlasTexture_05vk1"), SubResource("AtlasTexture_2y3vi"), SubResource("AtlasTexture_ism4h"), SubResource("AtlasTexture_1q2sq"), SubResource("AtlasTexture_1j210"), SubResource("AtlasTexture_e38hm"), SubResource("AtlasTexture_m6jp1"), SubResource("AtlasTexture_e1eki"), SubResource("AtlasTexture_c6kba")]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_764qp"]
+_data = {
+&"RESET": SubResource("Animation_c1gpu"),
+&"spinny": SubResource("Animation_5wvt2")
+}
 
 [node name="Ace" type="TextureRect" unique_id=1455493648]
-texture = ExtResource("1_hdnsk")
+texture_filter = 1
+offset_right = 19.0
+offset_bottom = 25.0
+texture = SubResource("AtlasTexture_y7j86")
 expand_mode = 3
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="." unique_id=1644988866]
+libraries/ = SubResource("AnimationLibrary_764qp")
+autoplay = &"spinny"
+speed_scale = 20.0

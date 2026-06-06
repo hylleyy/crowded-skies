@@ -1,14 +1,7 @@
 [gd_scene format=3 uid="uid://pa0gqhcrhi6f"]
 
 [ext_resource type="Script" uid="uid://d237cs1lkaq7k" path="res://scripts/remote_player.gd" id="1_x85gu"]
-[ext_resource type="Texture2D" uid="uid://cckl2pc5pgbg0" path="res://assets/artwork/birds/Flapper/feathers_0.tres" id="2_7wuec"]
-[ext_resource type="Texture2D" uid="uid://b8lcx3f2vsa33" path="res://assets/artwork/birds/Flapper/bird.tres" id="2_x85gu"]
-[ext_resource type="Texture2D" uid="uid://dggen7n830v2i" path="res://assets/artwork/birds/Flapper/wings_0.tres" id="3_1kwg0"]
-[ext_resource type="Texture2D" uid="uid://b8ycmc517w3kr" path="res://assets/artwork/birds/Flapper/feathers_1.tres" id="3_bhxst"]
-[ext_resource type="Texture2D" uid="uid://bos2sfp3nwepw" path="res://assets/artwork/birds/Flapper/feathers_2.tres" id="4_b4j18"]
-[ext_resource type="Texture2D" uid="uid://bsfgvuagmp5ay" path="res://assets/artwork/birds/Flapper/wings_1.tres" id="4_x1mp7"]
 [ext_resource type="FontFile" uid="uid://g3480khnpjv1" path="res://assets/fonts/pixel_operator/PixelOperator8-Bold.ttf" id="5_7daf1"]
-[ext_resource type="Texture2D" uid="uid://cmput8pioxn2h" path="res://assets/artwork/birds/Flapper/wings_2.tres" id="5_hgq68"]
 [ext_resource type="FontFile" uid="uid://bm6wi8r507fev" path="res://assets/fonts/twemoji_color_font/TwitterColorEmoji-SVGinOT.ttf" id="6_wdi53"]
 [ext_resource type="AudioStream" uid="uid://blj7al8jnchgt" path="res://assets/sound/effects/wosh.wav" id="9_b4j18"]
 [ext_resource type="AudioStream" uid="uid://c01g66bycu607" path="res://assets/sound/effects/fall.mp3" id="10_7daf1"]
@@ -29,6 +22,16 @@ font_size = 15
 outline_size = 10
 outline_color = Color(0.0142752165, 0.014275218, 0.014275218, 1)
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_1kwg0"]
+load_path = "res://.godot/imported/spritesheet.png-babc999be01e2142b973861e1d2b6677.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_x1mp7"]
+atlas = SubResource("CompressedTexture2D_1kwg0")
+region = Rect2(1, 2, 16, 16)
+
+[sub_resource type="Resource" id="Resource_hgq68"]
+metadata/__load_path__ = "res://assets/artwork/birds/Flapper/wings_0.tres"
+
 [sub_resource type="Animation" id="Animation_2p56t"]
 length = 0.001
 loop_mode = 1
@@ -42,7 +45,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 1,
-"values": [ExtResource("3_1kwg0")]
+"values": [SubResource("Resource_hgq68")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -69,6 +72,34 @@ tracks/2/keys = {
 "values": [20.0]
 }
 
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_7wuec"]
+load_path = "res://.godot/imported/spritesheet.png-babc999be01e2142b973861e1d2b6677.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_bhxst"]
+atlas = SubResource("CompressedTexture2D_7wuec")
+region = Rect2(22, 2, 7, 6)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_b4j18"]
+load_path = "res://.godot/imported/spritesheet.png-babc999be01e2142b973861e1d2b6677.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7daf1"]
+atlas = SubResource("CompressedTexture2D_b4j18")
+region = Rect2(22, 11, 7, 4)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wdi53"]
+load_path = "res://.godot/imported/spritesheet.png-babc999be01e2142b973861e1d2b6677.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w3vuy"]
+atlas = SubResource("CompressedTexture2D_wdi53")
+region = Rect2(33, 2, 7, 5)
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_wrld7"]
+load_path = "res://.godot/imported/spritesheet.png-babc999be01e2142b973861e1d2b6677.ctex"
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_owrr3"]
+atlas = SubResource("CompressedTexture2D_wrld7")
+region = Rect2(22, 11, 7, 4)
+
 [sub_resource type="Animation" id="Animation_5kejv"]
 resource_name = "flap"
 length = 4.0
@@ -82,7 +113,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0, 1, 2, 3),
 "transitions": PackedFloat32Array(1, 1, 1, 1),
 "update": 1,
-"values": [ExtResource("3_1kwg0"), ExtResource("4_x1mp7"), ExtResource("5_hgq68"), ExtResource("4_x1mp7")]
+"values": [SubResource("AtlasTexture_bhxst"), SubResource("AtlasTexture_7daf1"), SubResource("AtlasTexture_w3vuy"), SubResource("AtlasTexture_owrr3")]
 }
 tracks/1/type = "value"
 tracks/1/imported = false
@@ -119,7 +150,6 @@ _data = {
 texture_filter = 1
 script = ExtResource("1_x85gu")
 label_y_offset = -70.0
-feathers_textures = Array[Texture2D]([ExtResource("2_7wuec"), ExtResource("3_bhxst"), ExtResource("4_b4j18")])
 
 [node name="Label" type="Label" parent="." unique_id=431962856]
 top_level = true
@@ -144,7 +174,7 @@ max_lines_visible = 1
 [node name="Sprite2D" type="Sprite2D" parent="." unique_id=2023391037]
 y_sort_enabled = true
 scale = Vector2(5, 5)
-texture = ExtResource("2_x85gu")
+texture = SubResource("AtlasTexture_x1mp7")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="." unique_id=767736955 groups=["Players"]]
 polygon = PackedVector2Array(-35, 30, -35, 35, 20, 35, 20, 30, 30, 30, 30, -20, 25, -20, 25, -25, 20, -25, 20, -30, 15, -30, 15, -35, 10, -35, 10, -40, -25, -40, -25, -35, -30, -35, -30, -30, -35, -30, -35, 15, -40, 15, -40, 30)
@@ -155,7 +185,6 @@ position = Vector2(-42.5, -5)
 [node name="Sprite2D" type="Sprite2D" parent="Wings" unique_id=1086766564]
 position = Vector2(0, 20)
 scale = Vector2(5, 5)
-texture = ExtResource("3_1kwg0")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="Wings" unique_id=830241507]
 root_node = NodePath("../Sprite2D")
