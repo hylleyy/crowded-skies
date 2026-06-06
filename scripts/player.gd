@@ -37,6 +37,7 @@ signal enter_view
 @export_group('Experience')
 ## The amount of damage a player can take before dying. Change this to change the starter aces.
 @export var aces : int = 1
+var base_aces : int = aces # We'll restore the player aces to this after dying
 ## The amount of score the player has to use along the game (works like the game currency). Change this to set the starter score.
 @export var score : int = 0
 ## The time, in seconds, the player has to wait before respawning again.
@@ -173,6 +174,7 @@ func _begin_respawn_sequence() -> void:
 	wings_container.show()
 	position = Vector2.ZERO
 	velocity = Vector2.UP * jump_force
+	aces = base_aces
 	is_control_enabled = true # TO-DO: if the player dies too far from Vector2.ZERO they end up exiting the camera view, so it triggers another death. Need to fix that later
 	aces = 1
 
@@ -185,12 +187,14 @@ func _update_cooldown(delta : float) -> void: if cooldown_timer > 0.0: cooldown_
 func _unhandled_input(event : InputEvent) -> void:
 	if not is_control_enabled: return
 	if cooldown_timer > 0.0: return
+	get_viewport().set_input_as_handled()
 
 	if event.is_action_pressed('Left', true) : _execute_jump(-1)
 	if event.is_action_pressed('Right', true): _execute_jump(1)
 
 func _handle_screen_touch_input() -> void:
 	if cooldown_timer > 0.0: return
+	get_viewport().set_input_as_handled()
 
 	if Input.is_action_pressed('Jump', true):
 		var screen_middle : float = get_viewport_rect().size.x / 2.0
@@ -210,7 +214,6 @@ func _apply_friction(delta : float) -> void:
 
 func _execute_jump(direction : int) -> void:
 	cooldown_timer = jump_cooldown
-	get_viewport().set_input_as_handled()
 
 	velocity.y = -jump_force
 	var current_forward_force : float = forward_force
