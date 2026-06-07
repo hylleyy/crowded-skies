@@ -32,6 +32,26 @@ class_name Pipes
 		if is_inside_tree() and has_node('Top') and has_node('Bottom'):
 			_update_positions()
 
+## Make the height random
+@export var randomize_height : bool = false :
+	set(value):
+		randomize_height = value
+		if randomize_height: height = randf_range(minimum_height, maximum_height)
+		else: height = 0
+		notify_property_list_changed()
+
+@export var minimum_height : float :
+	set(value):
+		if not randomize_height: return
+		minimum_height = value
+		height = randf_range(minimum_height, maximum_height)
+
+@export var maximum_height : float :
+	set(value):
+		if not randomize_height: return
+		maximum_height = value
+		height = randf_range(minimum_height, maximum_height)
+
 # dependencies
 @onready var top : StaticBody2D = $Top as StaticBody2D
 @onready var bottom : StaticBody2D = $Bottom as StaticBody2D
@@ -67,3 +87,8 @@ func _on_trigger_body_entered(body : Node2D) -> void:
 	conquered = true
 	var player := body as Player
 	if player: player.increase_score(1)
+
+func _validate_property(property : Dictionary) -> void:
+	if property.name in ['minimum_height', 'maximum_height']:
+		if not randomize_height:
+			property.usage &= ~PROPERTY_USAGE_EDITOR 

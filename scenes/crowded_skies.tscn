@@ -361,6 +361,36 @@ target = NodePath("../Player")
 
 [node name="Pipes" parent="." unique_id=1848497384 instance=ExtResource("15_fplra")]
 position = Vector2(300, 0)
+minimum_height = -500.0
+maximum_height = 500.0
+
+[node name="Pipes2" parent="." unique_id=2120531954 instance=ExtResource("15_fplra")]
+position = Vector2(800, 0)
+height = 2.1324950837569077
+randomize_height = true
+minimum_height = -500.0
+maximum_height = 500.0
+
+[node name="Pipes3" parent="." unique_id=614971302 instance=ExtResource("15_fplra")]
+position = Vector2(1300, 0)
+height = -166.80443726711906
+randomize_height = true
+minimum_height = -500.0
+maximum_height = 500.0
+
+[node name="Pipes4" parent="." unique_id=872155096 instance=ExtResource("15_fplra")]
+position = Vector2(1800, 0)
+height = 249.64933703201848
+randomize_height = true
+minimum_height = -500.0
+maximum_height = 500.0
+
+[node name="Pipes5" parent="." unique_id=198624990 instance=ExtResource("15_fplra")]
+position = Vector2(2300, 0)
+height = -326.40942638517913
+randomize_height = true
+minimum_height = -500.0
+maximum_height = 500.0
 
 [node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618 node_paths=PackedStringArray("player")]
 script = ExtResource("16_fkwrg")

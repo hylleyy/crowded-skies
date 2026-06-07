@@ -156,7 +156,7 @@ func _take_damage(amount : int = 1, impact_normal : Vector2 = Vector2.ZERO) -> v
 		_die()
 		return
 
-	# aces -= amount
+	aces -= amount
 	damaged.emit(aces)
 
 func _die() -> void:
