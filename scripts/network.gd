@@ -33,6 +33,8 @@ var data : Dictionary = {
 	'version': ProjectSettings.get_setting('application/config/version')
 }
 
+var rendering : bool = false
+
 func _ready() -> void:
 	detected_players.clear()
 
@@ -61,10 +63,20 @@ func _process(_delta : float) -> void:
 		# Note for future: Check version here later
 		if not 'id' in packet: continue
 		if packet.id == data.id: continue
-		
+
 		if packet.id in detected_players:
-			if 'position' in packet: 
+			if not 'position' in packet:
+				detected_players[packet.id].rendering = false
+				continue
+ 
+			if 'position' in packet and detected_players[packet.id].rendering:
 				detected_players[packet.id].target_position = packet.position
+				continue
+
+			detected_players[packet.id].target_position = packet.position
+			detected_players[packet.id].position = packet.position
+			detected_players[packet.id].rendering = true
+
 			continue
 
 		var current_scene := get_tree().current_scene
@@ -79,13 +91,18 @@ func _process(_delta : float) -> void:
 		if 'position' in packet:
 			new_remote_player.target_position = packet.position
 			new_remote_player.position = packet.position
+		else:
+			detected_players[packet.id].rendering = false
 
 		current_scene.add_child(new_remote_player)
 
 # public api
 
-func set_player_position(player_position : Vector2) -> void: # did you like my absolte masterpiece networking code?
+func set_player_position(player_position : Vector2) -> void: # did you like my absolute masterpiece networking code?
 	data.position = player_position
+
+func set_render(value : bool = true) -> void:
+	rendering = value
 
 # connection and broadcasting
 
@@ -94,6 +111,12 @@ func _broadcast() -> void:
 	if not 'nickname' in data: return
 	if data.nickname.is_empty(): return
 
-	var packet : PackedByteArray = var_to_bytes(data)
+	var data_local := data.duplicate()
+	print(rendering)
+
+	if not rendering and 'position' in data:
+		data_local.erase('position')
+
+	var packet : PackedByteArray = var_to_bytes(data_local)
 	server.set_dest_address('255.255.255.255', PORT)
 	server.put_packet(packet)

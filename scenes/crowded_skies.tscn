@@ -12,7 +12,6 @@
 [ext_resource type="Texture2D" uid="uid://b66go6ja2wwty" path="res://assets/artwork/parallax/sunset/parallax_0.png" id="15_hr8dd"]
 [ext_resource type="FontFile" uid="uid://i7jh7pi3cu7s" path="res://assets/fonts/pixel_operator/PixelOperator.ttf" id="15_mlqko"]
 [ext_resource type="Script" uid="uid://c8sxsjuqopa2f" path="res://scripts/user_interface_layer.gd" id="16_fkwrg"]
-[ext_resource type="PackedScene" uid="uid://drtp6kai0qskr" path="res://scenes/prefabs/ui_ace.tscn" id="18_fkwrg"]
 [ext_resource type="FontFile" uid="uid://cyi534ybc1xkx" path="res://assets/fonts/pixel_operator/PixelOperatorMono8-Bold.ttf" id="18_l1i55"]
 [ext_resource type="FontFile" uid="uid://bv6fegciausty" path="res://assets/fonts/pixel_operator/PixelOperatorSC.ttf" id="19_4h73g"]
 [ext_resource type="Shader" uid="uid://2t5oo5ol3pef" path="res://scripts/blur.gdshader" id="19_4n06y"]
@@ -158,6 +157,19 @@ _data = {
 &"flap": SubResource("Animation_5kejv")
 }
 
+[sub_resource type="LabelSettings" id="LabelSettings_6ysw1"]
+font = ExtResource("15_mlqko")
+font_size = 80
+outline_size = 40
+outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+shadow_size = 40
+shadow_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
+shadow_offset = Vector2(10, 10)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_jwfet"]
+atlas = ExtResource("2_ov7bs")
+region = Rect2(118, 54, 23, 21)
+
 [sub_resource type="LabelSettings" id="LabelSettings_4h73g"]
 font = ExtResource("18_l1i55")
 font_size = 80
@@ -189,231 +201,27 @@ shadow_size = 80
 shadow_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 shadow_offset = Vector2(8, 8)
 
-[sub_resource type="LabelSettings" id="LabelSettings_6ysw1"]
-font = ExtResource("15_mlqko")
-font_size = 80
-outline_size = 40
-outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-shadow_size = 40
-shadow_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-shadow_offset = Vector2(10, 10)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_jwfet"]
-atlas = ExtResource("2_ov7bs")
-region = Rect2(118, 54, 23, 21)
-
 [node name="Crowded Skies" type="Node2D" unique_id=1808951590]
 texture_filter = 1
 
-[node name="Player" type="CharacterBody2D" parent="." unique_id=1711216642 groups=["Players"]]
+[node name="Sounds" type="Node2D" parent="." unique_id=2018901456]
 rotation = -0.0025663683
-collision_layer = 3
-collision_mask = 3
-script = ExtResource("1_7ru30")
-aces = 3
-respawn_delay = 0
-active_texture = SubResource("AtlasTexture_dqm64")
-dead_texture = SubResource("AtlasTexture_mlqko")
-feather_textures = Array[Texture2D]([SubResource("AtlasTexture_6ysw1"), SubResource("AtlasTexture_yld4r"), SubResource("AtlasTexture_fplra")])
 
-[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1953179067]
-y_sort_enabled = true
-scale = Vector2(5, 5)
-texture = SubResource("AtlasTexture_fkwrg")
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1409241716]
-position = Vector2(-2.5, 0)
-shape = SubResource("CapsuleShape2D_d1ofk")
-
-[node name="Wings" type="Node2D" parent="Player" unique_id=192666251]
-y_sort_enabled = true
-position = Vector2(-42.5, -5)
-
-[node name="Sprite2D" type="Sprite2D" parent="Player/Wings" unique_id=241912309]
-position = Vector2(0, 20)
-scale = Vector2(5, 5)
-texture = SubResource("AtlasTexture_4n06y")
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Wings" unique_id=1521059189]
-root_node = NodePath("../Sprite2D")
-libraries/ = SubResource("AnimationLibrary_en01c")
-speed_scale = 20.0
-
-[node name="Tail" type="Node2D" parent="Player" unique_id=231729599]
-
-[node name="Sounds" type="Node2D" parent="Player" unique_id=2018901456]
-
-[node name="Wosh" type="AudioStreamPlayer" parent="Player/Sounds" unique_id=1809786001]
+[node name="Wosh" type="AudioStreamPlayer" parent="Sounds" unique_id=1809786001]
 stream = ExtResource("9_6v4vb")
 volume_db = 12.0
 
-[node name="Fall" type="AudioStreamPlayer" parent="Player/Sounds" unique_id=1387452168]
+[node name="Fall" type="AudioStreamPlayer" parent="Sounds" unique_id=1387452168]
 stream = ExtResource("10_jdgwk")
 volume_db = 4.0
 
-[node name="Hit" type="AudioStreamPlayer" parent="Player/Sounds" unique_id=1834268192]
+[node name="Hit" type="AudioStreamPlayer" parent="Sounds" unique_id=1834268192]
 stream = ExtResource("11_cxrsx")
 volume_db = 2.5
 
-[node name="Score" type="AudioStreamPlayer" parent="Player/Sounds" unique_id=388639007]
+[node name="Score" type="AudioStreamPlayer" parent="Sounds" unique_id=388639007]
 stream = ExtResource("13_fkwrg")
 volume_db = 2.5
-
-[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Player" unique_id=1094777258]
-rect = Rect2(-35, -40, 65, 75)
-
-[node name="Camera2D" type="Camera2D" parent="." unique_id=320330791 node_paths=PackedStringArray("target")]
-script = ExtResource("3_qmrwl")
-target = NodePath("../Player")
-
-[node name="Pipes" parent="." unique_id=1848497384 instance=ExtResource("15_fplra")]
-position = Vector2(300, 0)
-
-[node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618 node_paths=PackedStringArray("player")]
-script = ExtResource("16_fkwrg")
-player = NodePath("../Player")
-
-[node name="Score" type="Label" parent="UserInterfaceLayer" unique_id=1689717494]
-visible = false
-custom_minimum_size = Vector2(0, 300)
-anchors_preset = 10
-anchor_right = 1.0
-offset_bottom = 80.0
-grow_horizontal = 2
-size_flags_vertical = 2
-text = "000"
-label_settings = SubResource("LabelSettings_4h73g")
-horizontal_alignment = 1
-vertical_alignment = 1
-justification_flags = 0
-text_overrun_behavior = 1
-ellipsis_char = ""
-max_lines_visible = 1
-visible_characters = 3
-script = SubResource("GDScript_4n06y")
-
-[node name="Aces" type="MarginContainer" parent="UserInterfaceLayer" unique_id=736681334]
-texture_filter = 1
-custom_minimum_size = Vector2(0, 150)
-anchors_preset = 12
-anchor_top = 1.0
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 0
-size_flags_horizontal = 3
-theme_override_constants/margin_left = 50
-theme_override_constants/margin_top = 0
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterfaceLayer/Aces" unique_id=1188560364]
-layout_mode = 2
-theme_override_constants/separation = 20
-
-[node name="Ace" parent="UserInterfaceLayer/Aces/HBoxContainer" unique_id=1455493648 instance=ExtResource("18_fkwrg")]
-layout_mode = 2
-
-[node name="GameOver" type="Panel" parent="UserInterfaceLayer" unique_id=733397662]
-visible = false
-material = SubResource("ShaderMaterial_4n06y")
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="CenterContainer" type="CenterContainer" parent="UserInterfaceLayer/GameOver" unique_id=1040202052]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterfaceLayer/GameOver/CenterContainer" unique_id=101741003]
-layout_mode = 2
-
-[node name="Label" type="Label" parent="UserInterfaceLayer/GameOver/CenterContainer/VBoxContainer" unique_id=137513859]
-layout_mode = 2
-text = "Respawning in..."
-label_settings = SubResource("LabelSettings_hr8dd")
-horizontal_alignment = 1
-vertical_alignment = 1
-justification_flags = 0
-ellipsis_char = ""
-
-[node name="Countdown" type="Label" parent="UserInterfaceLayer/GameOver/CenterContainer/VBoxContainer" unique_id=2004255850]
-custom_minimum_size = Vector2(500, 270)
-layout_mode = 2
-size_flags_vertical = 2
-text = "00"
-label_settings = SubResource("LabelSettings_ov7bs")
-horizontal_alignment = 1
-vertical_alignment = 1
-justification_flags = 0
-text_overrun_behavior = 1
-ellipsis_char = ""
-max_lines_visible = 1
-visible_characters = 2
-
-[node name="MainMenu" type="Control" parent="UserInterfaceLayer" unique_id=1935449439]
-texture_filter = 1
-layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="VBoxContainer" type="VBoxContainer" parent="UserInterfaceLayer/MainMenu" unique_id=143000432]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
-
-[node name="Crowded Skies" type="MarginContainer" parent="UserInterfaceLayer/MainMenu/VBoxContainer" unique_id=479909428]
-layout_mode = 2
-theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 200
-theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 0
-
-[node name="CINEMA" type="TextureRect" parent="UserInterfaceLayer/MainMenu/VBoxContainer/Crowded Skies" unique_id=51977016]
-custom_minimum_size = Vector2(0, 700)
-layout_mode = 2
-texture = ExtResource("14_dqm64")
-expand_mode = 5
-stretch_mode = 5
-
-[node name="Label" type="Label" parent="UserInterfaceLayer/MainMenu/VBoxContainer" unique_id=1571336393]
-layout_mode = 2
-size_flags_vertical = 3
-text = "Tap anywere to play"
-label_settings = SubResource("LabelSettings_6ysw1")
-horizontal_alignment = 1
-vertical_alignment = 1
-
-[node name="Menu" type="MarginContainer" parent="UserInterfaceLayer/MainMenu/VBoxContainer" unique_id=440367800]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-theme_override_constants/margin_right = 50
-theme_override_constants/margin_bottom = 50
-
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterfaceLayer/MainMenu/VBoxContainer/Menu" unique_id=1214882608]
-layout_mode = 2
-alignment = 2
-
-[node name="Settings" type="TextureRect" parent="UserInterfaceLayer/MainMenu/VBoxContainer/Menu/HBoxContainer" unique_id=935805249]
-texture_filter = 1
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
-texture = SubResource("AtlasTexture_jwfet")
-expand_mode = 2
-stretch_mode = 4
-flip_h = true
 
 [node name="Parallax" type="Node2D" parent="." unique_id=1614123703]
 
@@ -502,3 +310,209 @@ repeat_times = 3
 z_index = 1
 scale = Vector2(5, 5)
 texture = ExtResource("27_jwfet")
+
+[node name="Player" type="CharacterBody2D" parent="." unique_id=1711216642 node_paths=PackedStringArray("flap_sound", "knockback_sound", "death_sound", "score_sound") groups=["Players"]]
+process_mode = 4
+visible = false
+rotation = -0.0025663683
+collision_layer = 3
+collision_mask = 3
+script = ExtResource("1_7ru30")
+respawn_delay = 0
+active_texture = SubResource("AtlasTexture_dqm64")
+dead_texture = SubResource("AtlasTexture_mlqko")
+feather_textures = Array[Texture2D]([SubResource("AtlasTexture_6ysw1"), SubResource("AtlasTexture_yld4r"), SubResource("AtlasTexture_fplra")])
+flap_sound = NodePath("../Sounds/Wosh")
+knockback_sound = NodePath("../Sounds/Hit")
+death_sound = NodePath("../Sounds/Fall")
+score_sound = NodePath("../Sounds/Score")
+
+[node name="Sprite2D" type="Sprite2D" parent="Player" unique_id=1953179067]
+y_sort_enabled = true
+scale = Vector2(5, 5)
+texture = SubResource("AtlasTexture_fkwrg")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1409241716]
+position = Vector2(-2.5, 0)
+shape = SubResource("CapsuleShape2D_d1ofk")
+
+[node name="Wings" type="Node2D" parent="Player" unique_id=192666251]
+y_sort_enabled = true
+position = Vector2(-42.5, -5)
+
+[node name="Sprite2D" type="Sprite2D" parent="Player/Wings" unique_id=241912309]
+position = Vector2(0, 20)
+scale = Vector2(5, 5)
+texture = SubResource("AtlasTexture_4n06y")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="Player/Wings" unique_id=1521059189]
+root_node = NodePath("../Sprite2D")
+libraries/ = SubResource("AnimationLibrary_en01c")
+speed_scale = 20.0
+
+[node name="Tail" type="Node2D" parent="Player" unique_id=231729599]
+
+[node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Player" unique_id=1094777258]
+rect = Rect2(-35, -40, 65, 75)
+
+[node name="Camera2D" type="Camera2D" parent="." unique_id=320330791 node_paths=PackedStringArray("target")]
+script = ExtResource("3_qmrwl")
+target = NodePath("../Player")
+
+[node name="Pipes" parent="." unique_id=1848497384 instance=ExtResource("15_fplra")]
+position = Vector2(300, 0)
+
+[node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618 node_paths=PackedStringArray("player")]
+script = ExtResource("16_fkwrg")
+player = NodePath("../Player")
+
+[node name="MenuScreen" type="Control" parent="UserInterfaceLayer" unique_id=1935449439]
+texture_filter = 1
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterfaceLayer/MenuScreen" unique_id=143000432]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Crowded Skies" type="MarginContainer" parent="UserInterfaceLayer/MenuScreen/VBoxContainer" unique_id=479909428]
+layout_mode = 2
+theme_override_constants/margin_left = 100
+theme_override_constants/margin_top = 200
+theme_override_constants/margin_right = 100
+theme_override_constants/margin_bottom = 0
+
+[node name="CINEMA" type="TextureRect" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Crowded Skies" unique_id=51977016]
+custom_minimum_size = Vector2(0, 700)
+layout_mode = 2
+texture = ExtResource("14_dqm64")
+expand_mode = 5
+stretch_mode = 5
+
+[node name="Label" type="Label" parent="UserInterfaceLayer/MenuScreen/VBoxContainer" unique_id=1571336393]
+layout_mode = 2
+size_flags_vertical = 3
+text = "Tap anywere to play"
+label_settings = SubResource("LabelSettings_6ysw1")
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Menu" type="MarginContainer" parent="UserInterfaceLayer/MenuScreen/VBoxContainer" unique_id=440367800]
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Menu" unique_id=1214882608]
+layout_mode = 2
+alignment = 2
+
+[node name="Settings" type="TextureRect" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Menu/HBoxContainer" unique_id=935805249]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 100)
+layout_mode = 2
+texture = SubResource("AtlasTexture_jwfet")
+expand_mode = 2
+stretch_mode = 4
+flip_h = true
+
+[node name="GameScreen" type="Control" parent="UserInterfaceLayer" unique_id=408066181]
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Score" type="Label" parent="UserInterfaceLayer/GameScreen" unique_id=1689717494]
+custom_minimum_size = Vector2(0, 300)
+layout_mode = 1
+anchors_preset = 10
+anchor_right = 1.0
+offset_bottom = 300.0
+grow_horizontal = 2
+size_flags_vertical = 2
+text = "000"
+label_settings = SubResource("LabelSettings_4h73g")
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 0
+text_overrun_behavior = 1
+ellipsis_char = ""
+max_lines_visible = 1
+visible_characters = 3
+script = SubResource("GDScript_4n06y")
+
+[node name="Aces" type="MarginContainer" parent="UserInterfaceLayer/GameScreen" unique_id=736681334]
+texture_filter = 1
+custom_minimum_size = Vector2(0, 150)
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_top = -150.0
+offset_right = 176.0
+grow_horizontal = 2
+grow_vertical = 0
+size_flags_horizontal = 3
+theme_override_constants/margin_left = 50
+theme_override_constants/margin_top = 0
+theme_override_constants/margin_right = 50
+theme_override_constants/margin_bottom = 50
+
+[node name="HBoxContainer" type="HBoxContainer" parent="UserInterfaceLayer/GameScreen/Aces" unique_id=1188560364]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="DeathScreen" type="Panel" parent="UserInterfaceLayer" unique_id=733397662]
+visible = false
+material = SubResource("ShaderMaterial_4n06y")
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CenterContainer" type="CenterContainer" parent="UserInterfaceLayer/DeathScreen" unique_id=1040202052]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="UserInterfaceLayer/DeathScreen/CenterContainer" unique_id=101741003]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="UserInterfaceLayer/DeathScreen/CenterContainer/VBoxContainer" unique_id=137513859]
+layout_mode = 2
+text = "Respawning in..."
+label_settings = SubResource("LabelSettings_hr8dd")
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 0
+ellipsis_char = ""
+
+[node name="Countdown" type="Label" parent="UserInterfaceLayer/DeathScreen/CenterContainer/VBoxContainer" unique_id=2004255850]
+custom_minimum_size = Vector2(500, 270)
+layout_mode = 2
+size_flags_vertical = 2
+text = "00"
+label_settings = SubResource("LabelSettings_ov7bs")
+horizontal_alignment = 1
+vertical_alignment = 1
+justification_flags = 0
+text_overrun_behavior = 1
+ellipsis_char = ""
+max_lines_visible = 1
+visible_characters = 2

@@ -34,16 +34,33 @@ var target_position : Vector2 = Vector2.ZERO
 @onready var wings_animator : AnimationPlayer = $Wings/AnimationPlayer
 @onready var wosh_sound : AudioStreamPlayer2D = $Sounds/Wosh
 
+var rendering : bool = true:
+	set(value):
+		rendering = value
+		if rendering:
+			show()
+			if collision: collision.disabled = false
+		else:
+			hide()
+			if collision: collision.disabled = true
+			if tails_container: for child in tails_container.get_children():
+				child.hide()
+				child.queue_free()
+
+
 func _ready() -> void:
+	if not rendering: collision.disabled = true
 	wings_animator.animation_finished.connect(func(animation_name: String) : if animation_name != 'RESET': wings_animator.play('RESET'))
 	label.text = nickname
 
 func _process(_delta: float) -> void:
-	label.position = label.position.lerp(Vector2(position.x - label.size.x/2, position.y + label_y_offset), label_lerp_weight)
+	if not rendering: return
 
-	Vector2()
+	label.position = Vector2(position.x - label.size.x/2, position.y + label_y_offset) # label.position.lerp(Vector2(position.x - label.size.x/2, position.y + label_y_offset), label_lerp_weight)
 
 func _physics_process(delta: float) -> void:
+	if not rendering: return
+
 	var to_target = target_position - position
 
 	if to_target.length() > 2.:

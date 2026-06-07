@@ -6,23 +6,22 @@ extends CanvasLayer
 var ace_prefab : PackedScene = preload('res://scenes/prefabs/ui_ace.tscn')
 
 #dependencies
-@onready var score_label : Label = $Score
-@onready var aces_hblist : HBoxContainer = $Aces/HBoxContainer
-@onready var game_over_screen : Control = $GameOver
-@onready var respawn_countdown : Label = $GameOver/CenterContainer/VBoxContainer/Countdown
-@onready var main_menu_group : Control = $MainMenu
+@onready var game_screen : Control = $GameScreen
+@onready var menu_screen : Control = $MenuScreen
+@onready var death_screen : Control = $DeathScreen
+
+@onready var score_label : Label = $GameScreen/Score
+@onready var aces_hblist : HBoxContainer = $GameScreen/Aces/HBoxContainer
+@onready var respawn_countdown : Label = $DeathScreen/CenterContainer/VBoxContainer/Countdown
 
 func _ready() -> void:
 	player.score_changed.connect(_update_score_ui)
 	player.damaged.connect(_update_aces_ui)
 	player.died.connect(_on_player_die)
 	player.respawned.connect(_on_player_repawn)
-	player.respawn_countdown.connect(_update_respawn_timer)
+	player.respawn_countdown.connect(func(time_left : int): respawn_countdown.text = '%02d' % time_left)
 
-	_update_score_ui(player.score)
-	_update_aces_ui(player.aces)
-
-func _refresh_ui() -> void:
+func _refresh_game_screen_values() -> void:
 	_update_score_ui(player.score)
 	_update_aces_ui(player.aces)
 
@@ -48,20 +47,26 @@ func _update_aces_ui(aces_left : int) -> void:
 			var extra_child = existing_ui_child[i]
 			extra_child.hide()
 
-func _update_respawn_timer(time_left : int) -> void:
-	respawn_countdown.text = '%02d' % time_left
-
 func _on_player_die() -> void:
-	game_over_screen.show()
-	_refresh_ui()
+	player.disable()
+	game_screen.hide()
+	death_screen.show()
+	_refresh_game_screen_values()
 
 func _on_player_repawn() -> void:
-	game_over_screen.hide()
-	_refresh_ui()
+	death_screen.hide()
+	death_screen.hide()
+	menu_screen.show()
 
-func _input(event: InputEvent) -> void:
-	if not main_menu_group.visible: return
+func _input(event: InputEvent) -> void: # And I'm pretty sure this is overkill
+	if not menu_screen.visible: return
 	if not event is InputEventMouseButton: return
 	if not event.pressed: return
 	if event.button_index != MOUSE_BUTTON_LEFT: return
-	main_menu_group.hide()
+
+	menu_screen.hide()
+	death_screen.hide()
+	_refresh_game_screen_values()
+	game_screen.show()
+	player.enable() # This also shouldn't be here
+	Network.set_render(true) # This shouldn't be here

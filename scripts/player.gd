@@ -36,8 +36,8 @@ signal enter_view
 
 @export_group('Experience')
 ## The amount of damage a player can take before dying. Change this to change the starter aces.
-@export var aces : int = 1
-var base_aces : int = aces # We'll restore the player aces to this after dying
+@export var aces : int = 3
+var base_aces : int # We'll restore the player aces to this after dying
 ## The amount of score the player has to use along the game (works like the game currency). Change this to set the starter score.
 @export var score : int = 0
 ## The time, in seconds, the player has to wait before respawning again.
@@ -63,6 +63,16 @@ var base_aces : int = aces # We'll restore the player aces to this after dying
 ## Pool of textures used for generating random cosmetic feather particles.
 @export var feather_textures : Array[Texture2D]
 
+@export_group('Audio Assets')
+## Sound effect played when player jumps.
+@export var flap_sound : AudioStreamPlayer
+## Sound effect played when player hits a remote player.
+@export var knockback_sound : AudioStreamPlayer
+## Sound effect played when player loses all their lives.
+@export var death_sound : AudioStreamPlayer
+## Sound effect played when player scores.
+@export var score_sound : AudioStreamPlayer
+
 const FALL_MULTIPLIER : float = 1.8
 const MAX_FALL_SPEED : float = 1000.
 const MAXIMUM_FEATHERS : int = 3
@@ -82,16 +92,11 @@ var is_control_enabled : bool = true
 @onready var wings_animator : AnimationPlayer = $Wings/AnimationPlayer
 @onready var visible_on_screen_notificer : VisibleOnScreenNotifier2D = $VisibleOnScreenNotifier2D
 
-# Sound effects
-@onready var sound_woosh : AudioStreamPlayer = $Sounds/Wosh
-@onready var sound_hit : AudioStreamPlayer = $Sounds/Hit
-@onready var sound_fall : AudioStreamPlayer = $Sounds/Fall
-@onready var sound_score : AudioStreamPlayer = $Sounds/Score
-
 func _ready() -> void:
 	sprite.texture = active_texture
 	original_scale = sprite.scale
 	static_jump_force = jump_force
+	base_aces = aces
 
 	wings_animator.animation_finished.connect(func(anim_name : String) -> void:
 		if anim_name != 'RESET':
@@ -127,13 +132,23 @@ func _physics_process(delta : float) -> void:
 	_handle_direction_and_rotation(delta)
 	_process_collisions()
 
-func _take_damage(amount : int = 1) -> void:
+func _take_damage(amount : int = 1, impact_normal : Vector2 = Vector2.ZERO) -> void:
 	# TO-DO: there is a bug of multiple collision when holding screen & hiting obstacle, need to add colldown for damage too
 	if not is_control_enabled: return
 
-	var launch_direction : Vector2 = -transform.x # we'll use transform rotation in case godot physics engine zero out the velocity on collision
+	var launch_direction : Vector2
+
+	if impact_normal != Vector2.ZERO:
+		launch_direction = impact_normal
+		if launch_direction.y == 0: # if player hit a side wall
+			launch_direction.y = -0.5 # add a slight upward lift
+			launch_direction = launch_direction.normalized()
+	else:
+		var facing_dir : float = -1.0 if sprite.flip_h else 1.0
+		launch_direction = Vector2(-facing_dir, -0.5).normalized()
+
 	velocity = launch_direction * (repulsion_force / 2)
-	sound_fall.play()
+	if death_sound: death_sound.play()
 
 	if aces - amount <= 0:
 		aces = 0
@@ -141,7 +156,7 @@ func _take_damage(amount : int = 1) -> void:
 		_die()
 		return
 
-	aces -= amount
+	# aces -= amount
 	damaged.emit(aces)
 
 func _die() -> void:
@@ -153,6 +168,7 @@ func _die() -> void:
 	wings_container.hide()
 
 	_begin_respawn_sequence()
+	Network.set_render(false)
 
 func _begin_respawn_sequence() -> void:
 	if is_control_enabled: return
@@ -174,11 +190,11 @@ func _begin_respawn_sequence() -> void:
 	wings_container.show()
 	position = Vector2.ZERO
 	velocity = Vector2.UP * jump_force
-	aces = base_aces
 	is_control_enabled = true # TO-DO: if the player dies too far from Vector2.ZERO they end up exiting the camera view, so it triggers another death. Need to fix that later
-	aces = 1
+	aces = base_aces
 
 	respawned.emit()
+	Network.set_render(true)
 
 # inputs
 
@@ -249,14 +265,14 @@ func _process_collisions() -> void:
 
 		if collider.is_in_group('Players'): _handle_knockback(collider)
 		elif collider.is_in_group('Damageable') and is_control_enabled:
-			_take_damage()
+			_take_damage(1, collision_data.get_normal())
 			break # often godot will generate multiple collision contacts in a single physics call, this break prevents double damage
 
 func _handle_knockback(collider : Node2D) -> void:
 	var push_direction : Vector2 = (global_position - collider.global_position).normalized()
 	velocity = push_direction * repulsion_force
 	remote_player_knockback.emit()
-	sound_hit.play()
+	if knockback_sound: knockback_sound.play()
 
 # juice
 
@@ -267,7 +283,7 @@ func _play_jump_effects(direction : int) -> void:
 	sprite_tween.tween_property(sprite, 'scale', original_scale, 0.2).set_trans(Tween.TRANS_ELASTIC)
 
 	wings_animator.play('flap')
-	sound_woosh.play()
+	if flap_sound: flap_sound.play()
 	Input.vibrate_handheld(25, 0.5)
 
 	_generate_feathers(direction)
@@ -310,4 +326,14 @@ func increase_score(amount : int = 1) -> void:
 
 	score += amount
 	score_changed.emit(score)
-	sound_score.play()
+	if score_sound: score_sound.play()
+
+# management
+
+func disable() -> void:
+	process_mode = Node.PROCESS_MODE_DISABLED
+	hide()
+
+func enable() -> void:
+	process_mode = Node.PROCESS_MODE_INHERIT
+	show()
