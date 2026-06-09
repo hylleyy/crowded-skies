@@ -7,7 +7,6 @@ func _ready() -> void:
 	player.score_changed.connect(ui.update_score_ui)
 	player.damaged.connect(ui.update_aces_ui)
 	player.died.connect(_on_player_die)
-	player.respawned.connect(ui.refresh_game_screen_values.bind(player.score, player.aces))
 	player.respawned.connect(ui.show_game_ui)
 	player.respawn_countdown.connect(ui.update_respawn_countdow)
 

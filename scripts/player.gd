@@ -198,11 +198,13 @@ func _begin_respawn_countdown() -> void:
 		child.queue_free()
 
 	can_spawn = true
+	aces = base_aces
 	Network.set_render(false)
 
 
 func spawn() -> void:
 	if is_control_enabled: return
+	if aces <= 0: return
 	if not can_spawn: return
 	can_spawn = false
 
@@ -211,7 +213,6 @@ func spawn() -> void:
 	position = Vector2.ZERO
 	velocity = Vector2.UP * jump_force
 	is_control_enabled = true
-	aces = base_aces
 
 	enable()
 	respawned.emit()
