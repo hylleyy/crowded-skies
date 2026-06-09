@@ -15,6 +15,7 @@ var ace_prefab : PackedScene = preload('res://scenes/prefabs/ui_ace.tscn')
 
 
 func refresh_game_screen_values(score : int, aces : int) -> void:
+	offset = Vector2.ZERO
 	update_score_ui(score)
 	update_aces_ui(aces)
 

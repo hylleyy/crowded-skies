@@ -204,7 +204,8 @@ player = NodePath("Player")
 ui = NodePath("UserInterfaceLayer")
 
 [node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618]
-follow_viewport_scale = 403.684
+offset = Vector2(-540, -960)
+transform = Transform2D(1, 0, 0, 1, -540, -960)
 script = ExtResource("16_fkwrg")
 
 [node name="MenuScreen" type="Control" parent="UserInterfaceLayer" unique_id=1935449439]
@@ -376,7 +377,6 @@ max_lines_visible = 1
 visible_characters = 2
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1711216642 node_paths=PackedStringArray("flap_sound", "knockback_sound", "death_sound", "score_sound") groups=["Players"]]
-process_mode = 4
 rotation = -0.0025663683
 collision_layer = 3
 collision_mask = 3
@@ -396,6 +396,7 @@ scale = Vector2(5, 5)
 texture = SubResource("AtlasTexture_fkwrg")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player" unique_id=1409241716]
+visible = false
 position = Vector2(-2.5, 0)
 shape = SubResource("CapsuleShape2D_d1ofk")
 
@@ -417,8 +418,10 @@ speed_scale = 20.0
 
 [node name="VisibleOnScreenNotifier2D" type="VisibleOnScreenNotifier2D" parent="Player" unique_id=1094777258]
 rect = Rect2(-35, -40, 65, 75)
+show_rect = false
 
 [node name="Camera2D" type="Camera2D" parent="." unique_id=320330791 node_paths=PackedStringArray("target")]
+editor_draw_screen = false
 script = ExtResource("3_qmrwl")
 target = NodePath("../Player")
 
@@ -534,28 +537,28 @@ position = Vector2(600, 0)
 
 [node name="Pipes2" parent="." unique_id=2120531954 instance=ExtResource("15_fplra")]
 position = Vector2(1100, 0)
-height = -30.877518076870103
+height = 428.24336079663817
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes3" parent="." unique_id=614971302 instance=ExtResource("15_fplra")]
 position = Vector2(1600, 0)
-height = -454.81071828403674
+height = -487.7740181880507
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes4" parent="." unique_id=872155096 instance=ExtResource("15_fplra")]
 position = Vector2(2100, 0)
-height = -296.8814725339158
+height = 276.6821972469796
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes5" parent="." unique_id=198624990 instance=ExtResource("15_fplra")]
 position = Vector2(2600, 0)
-height = 1.7462911463828164
+height = -365.3989734252684
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0

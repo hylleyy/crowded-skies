@@ -83,6 +83,7 @@ scale = Vector2(5, 400)
 texture = SubResource("AtlasTexture_fkxfj")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Top" unique_id=1381334920]
+visible = false
 use_parent_material = true
 polygon = PackedVector2Array(-70, -25, 70, -25, 70, -75, 65, -75, 65, -80, 60, -80, 60, -2500, -60, -2500, -60, -80, -65, -80, -65, -75, -70, -75)
 
@@ -111,6 +112,7 @@ scale = Vector2(5, 400)
 texture = SubResource("AtlasTexture_uf8fe")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bottom" unique_id=1266374994]
+visible = false
 use_parent_material = true
 position = Vector2(0, 1299.9999)
 scale = Vector2(5, 400)
@@ -119,4 +121,5 @@ polygon = PackedVector2Array(-14, -3.1875, 14, -3.1875, 14, -3.0625, 13, -3.0625
 [node name="Area2D" type="Area2D" parent="." unique_id=640848986]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" unique_id=1888036245]
+visible = false
 shape = SubResource("SegmentShape2D_4n06y")
