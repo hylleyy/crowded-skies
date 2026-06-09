@@ -82,7 +82,7 @@ static var static_jump_force : float
 
 var original_scale : Vector2
 var cooldown_timer : float = 0.0
-var is_control_enabled : bool = true
+var is_control_enabled : bool = false # player needs to touch screen first to be able to control
 var can_spawn : bool = true
 
 # Dependencies
@@ -195,6 +195,7 @@ func _begin_respawn_countdown() -> void:
 
 
 func spawn() -> void:
+	if is_control_enabled: return
 	if not can_spawn: return
 	can_spawn = false
 
