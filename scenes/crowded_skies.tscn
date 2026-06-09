@@ -230,15 +230,12 @@ layout_mode = 2
 size_flags_vertical = 3
 size_flags_stretch_ratio = 2.0
 theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 100
-theme_override_constants/margin_bottom = 0
 
 [node name="CINEMA" type="TextureRect" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Crowded Skies" unique_id=51977016]
-custom_minimum_size = Vector2(0, 700)
 layout_mode = 2
 texture = ExtResource("14_dqm64")
-expand_mode = 4
+expand_mode = 5
 stretch_mode = 5
 
 [node name="Buttons" type="Control" parent="UserInterfaceLayer/MenuScreen/VBoxContainer" unique_id=2141854888]
@@ -450,7 +447,7 @@ volume_db = 2.5
 scroll_scale = Vector2(0.05, 1)
 repeat_size = Vector2(1920, 0)
 autoscroll = Vector2(-5, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D" unique_id=1762424941]
 z_index = -999
@@ -461,7 +458,7 @@ texture = ExtResource("15_hr8dd")
 scroll_scale = Vector2(0.2, 1)
 repeat_size = Vector2(1920, 0)
 autoscroll = Vector2(-20, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D2" unique_id=329974424]
 z_index = -998
@@ -472,7 +469,7 @@ texture = ExtResource("22_4n06y")
 scroll_scale = Vector2(0.1, 1)
 repeat_size = Vector2(1920, 0)
 autoscroll = Vector2(-10, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D4" unique_id=2005651646]
 z_index = -999
@@ -483,7 +480,7 @@ texture = ExtResource("21_fkwrg")
 scroll_scale = Vector2(0.4, 1)
 repeat_size = Vector2(1920, 0)
 autoscroll = Vector2(-40, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D5" unique_id=2088815897]
 z_index = -999
@@ -493,7 +490,7 @@ texture = ExtResource("24_ohr8t")
 [node name="Parallax2D3" type="Parallax2D" parent="Background" unique_id=1333492153]
 scroll_scale = Vector2(0.15, 1)
 repeat_size = Vector2(1920, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D3" unique_id=2100459919]
 z_index = -999
@@ -504,7 +501,7 @@ texture = ExtResource("23_wpp8p")
 scroll_scale = Vector2(0.5, 1)
 repeat_size = Vector2(1920, 0)
 autoscroll = Vector2(-50, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D6" unique_id=68176033]
 z_index = -999
@@ -514,7 +511,7 @@ texture = ExtResource("25_y5ub7")
 [node name="Parallax2D7" type="Parallax2D" parent="Background" unique_id=78707791]
 scroll_scale = Vector2(0.3, 1)
 repeat_size = Vector2(1920, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D7" unique_id=440041583]
 z_index = -999
@@ -525,7 +522,7 @@ texture = ExtResource("26_heara")
 scroll_scale = Vector2(0.7, 1)
 repeat_size = Vector2(1920, 0)
 autoscroll = Vector2(-70, 0)
-repeat_times = 3
+repeat_times = 5
 
 [node name="Sprite2D" type="Sprite2D" parent="Background/Parallax2D8" unique_id=1270026336]
 z_index = 1
