@@ -3,6 +3,35 @@
 [ext_resource type="Script" uid="uid://bd0nb85jiedx8" path="res://scripts/pipes.gd" id="1_2tcbs"]
 [ext_resource type="Texture2D" uid="uid://df5q58kq1jysu" path="res://assets/artwork/spritesheet.png" id="2_bsto2"]
 
+[sub_resource type="Shader" id="Shader_bsto2"]
+code = "shader_type canvas_item;
+
+// Uniforms to define your vertical clipping lines in global world pixels
+uniform float min_y = 100.0; 
+uniform float max_y = 900.0; 
+
+// A varying variable to pass the world Y position from vertex to fragment
+varying float world_y;
+
+void vertex() {
+    // Calculate the global Y coordinate by multiplying the vertex by the model matrix
+    // and store it in our varying variable
+    world_y = (MODEL_MATRIX * vec4(VERTEX, 0.0, 1.0)).y;
+}
+
+void fragment() {
+    // Read the passed world_y value to check against boundaries
+    if (world_y < min_y || world_y > max_y) {
+        COLOR.a = 0.0; // Hide the pixel completely
+    }
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_2tcbs"]
+shader = SubResource("Shader_bsto2")
+shader_parameter/min_y = -1920.0
+shader_parameter/max_y = 1920.0
+
 [sub_resource type="AtlasTexture" id="AtlasTexture_2tcbs"]
 atlas = ExtResource("2_bsto2")
 region = Rect2(11, 153, 28, 20)
@@ -26,15 +55,18 @@ b = Vector2(0, 150)
 
 [node name="Pipes" type="Node2D" unique_id=1848497384]
 texture_filter = 1
+material = SubResource("ShaderMaterial_2tcbs")
 script = ExtResource("1_2tcbs")
 
 [node name="Top" type="StaticBody2D" parent="." unique_id=602694648 groups=["Damageable"]]
+use_parent_material = true
 position = Vector2(0, -150)
 collision_layer = 2
 collision_mask = 2
 
 [node name="Head" type="Sprite2D" parent="Top" unique_id=379644708]
 z_index = -3
+use_parent_material = true
 position = Vector2(0, -50)
 rotation = 3.1415925
 scale = Vector2(5, 5)
@@ -45,14 +77,17 @@ flip_h = true
 z_index = -3
 z_as_relative = false
 y_sort_enabled = true
+use_parent_material = true
 position = Vector2(0, -1300)
 scale = Vector2(5, 400)
 texture = SubResource("AtlasTexture_fkxfj")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Top" unique_id=1381334920]
+use_parent_material = true
 polygon = PackedVector2Array(-70, -25, 70, -25, 70, -75, 65, -75, 65, -80, 60, -80, 60, -2500, -60, -2500, -60, -80, -65, -80, -65, -75, -70, -75)
 
 [node name="Bottom" type="StaticBody2D" parent="." unique_id=2055478190 groups=["Damageable"]]
+use_parent_material = true
 position = Vector2(0, 150)
 collision_layer = 2
 collision_mask = 2
@@ -61,6 +96,7 @@ collision_mask = 2
 z_index = -3
 z_as_relative = false
 y_sort_enabled = true
+use_parent_material = true
 position = Vector2(0, 50)
 scale = Vector2(5, 5)
 texture = SubResource("AtlasTexture_13xkq")
@@ -69,11 +105,13 @@ texture = SubResource("AtlasTexture_13xkq")
 z_index = -3
 z_as_relative = false
 y_sort_enabled = true
+use_parent_material = true
 position = Vector2(0, 1299.9999)
 scale = Vector2(5, 400)
 texture = SubResource("AtlasTexture_uf8fe")
 
 [node name="CollisionPolygon2D" type="CollisionPolygon2D" parent="Bottom" unique_id=1266374994]
+use_parent_material = true
 position = Vector2(0, 1299.9999)
 scale = Vector2(5, 400)
 polygon = PackedVector2Array(-14, -3.1875, 14, -3.1875, 14, -3.0625, 13, -3.0625, 13, -3.05, 12, -3.05, 12, 3.0000005, -12, 3.0000005, -12, -3.05, -13, -3.05, -13, -3.0625, -14, -3.0625)
