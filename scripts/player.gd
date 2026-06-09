@@ -83,6 +83,7 @@ static var static_jump_force : float
 var original_scale : Vector2
 var cooldown_timer : float = 0.0
 var is_control_enabled : bool = true
+var can_spawn : bool = true
 
 # Dependencies
 @onready var sprite : Sprite2D = $Sprite2D
@@ -163,19 +164,18 @@ func _die() -> void:
 	if not is_control_enabled: return
 	is_control_enabled = false
 
+	can_spawn = false
 	sprite.texture = dead_texture
 	died.emit()
 	wings_container.hide()
 
-	_begin_respawn_sequence()
-	Network.set_render(false)
+	_begin_respawn_countdown()
 
-func _begin_respawn_sequence() -> void:
+func _begin_respawn_countdown() -> void:
 	if is_control_enabled: return
 
 	if respawn_delay > 0:
 		var timer : Timer = Timer.new()
-		print(timer)
 		timer.wait_time = 1.0
 		add_child(timer)
 		timer.start()
@@ -183,12 +183,20 @@ func _begin_respawn_sequence() -> void:
 		for i in respawn_delay:
 			respawn_countdown.emit(respawn_delay - i)
 			await timer.timeout
-
 		timer.queue_free()
+	respawn_countdown.emit(0) # We can't forget 0 is a number too!!
 
 	for child in tails_container.get_children():
 		child.hide()
 		child.queue_free()
+
+	can_spawn = true
+	Network.set_render(false)
+
+
+func spawn() -> void:
+	if not can_spawn: return
+	can_spawn = false
 
 	sprite.texture = active_texture
 	wings_container.show()
@@ -197,6 +205,7 @@ func _begin_respawn_sequence() -> void:
 	is_control_enabled = true # TO-DO: if the player dies too far from Vector2.ZERO they end up exiting the camera view, so it triggers another death. Need to fix that later
 	aces = base_aces
 
+	enable()
 	respawned.emit()
 	Network.set_render(true)
 
@@ -335,9 +344,11 @@ func increase_score(amount : int = 1) -> void:
 # management
 
 func disable() -> void:
-	process_mode = Node.PROCESS_MODE_DISABLED
 	hide()
+	Network.set_render(false)
+	process_mode = Node.PROCESS_MODE_DISABLED
 
 func enable() -> void:
 	process_mode = Node.PROCESS_MODE_INHERIT
+	Network.set_render(true)
 	show()

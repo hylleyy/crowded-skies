@@ -1,6 +1,7 @@
 [gd_scene format=3 uid="uid://cav6bmpqa8odc"]
 
 [ext_resource type="Script" uid="uid://dwfsc0uhh1c1n" path="res://scripts/player.gd" id="1_7ru30"]
+[ext_resource type="Script" uid="uid://dlr52fgmhy1d6" path="res://scripts/crowded_skies.gd" id="1_mlqko"]
 [ext_resource type="Texture2D" uid="uid://df5q58kq1jysu" path="res://assets/artwork/spritesheet.png" id="2_ov7bs"]
 [ext_resource type="Script" uid="uid://7lqni56gud7r" path="res://scripts/camera.gd" id="3_qmrwl"]
 [ext_resource type="AudioStream" uid="uid://blj7al8jnchgt" path="res://assets/sound/effects/wosh.wav" id="9_6v4vb"]
@@ -11,7 +12,7 @@
 [ext_resource type="PackedScene" uid="uid://brckemi80fsna" path="res://scenes/prefabs/pipes.tscn" id="15_fplra"]
 [ext_resource type="Texture2D" uid="uid://b66go6ja2wwty" path="res://assets/artwork/parallax/sunset/parallax_0.png" id="15_hr8dd"]
 [ext_resource type="FontFile" uid="uid://i7jh7pi3cu7s" path="res://assets/fonts/pixel_operator/PixelOperator.ttf" id="15_mlqko"]
-[ext_resource type="Script" uid="uid://c8sxsjuqopa2f" path="res://scripts/user_interface_layer.gd" id="16_fkwrg"]
+[ext_resource type="Script" uid="uid://c8sxsjuqopa2f" path="res://scripts/ui.gd" id="16_fkwrg"]
 [ext_resource type="FontFile" uid="uid://cyi534ybc1xkx" path="res://assets/fonts/pixel_operator/PixelOperatorMono8-Bold.ttf" id="18_l1i55"]
 [ext_resource type="FontFile" uid="uid://bv6fegciausty" path="res://assets/fonts/pixel_operator/PixelOperatorSC.ttf" id="19_4h73g"]
 [ext_resource type="Shader" uid="uid://2t5oo5ol3pef" path="res://scripts/blur.gdshader" id="19_4n06y"]
@@ -201,8 +202,11 @@ shadow_size = 80
 shadow_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
 shadow_offset = Vector2(8, 8)
 
-[node name="Crowded Skies" type="Node2D" unique_id=1808951590]
+[node name="Crowded Skies" type="Node2D" unique_id=1808951590 node_paths=PackedStringArray("player", "ui")]
 texture_filter = 1
+script = ExtResource("1_mlqko")
+player = NodePath("Player")
+ui = NodePath("UserInterfaceLayer")
 
 [node name="Sounds" type="Node2D" parent="." unique_id=2018901456]
 rotation = -0.0025663683
@@ -313,7 +317,6 @@ texture = ExtResource("27_jwfet")
 
 [node name="Player" type="CharacterBody2D" parent="." unique_id=1711216642 node_paths=PackedStringArray("flap_sound", "knockback_sound", "death_sound", "score_sound") groups=["Players"]]
 process_mode = 4
-visible = false
 rotation = -0.0025663683
 collision_layer = 3
 collision_mask = 3
@@ -364,35 +367,34 @@ position = Vector2(600, 0)
 
 [node name="Pipes2" parent="." unique_id=2120531954 instance=ExtResource("15_fplra")]
 position = Vector2(1100, 0)
-height = 178.88647646035463
+height = -294.98283135855934
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes3" parent="." unique_id=614971302 instance=ExtResource("15_fplra")]
 position = Vector2(1600, 0)
-height = -392.3117563858784
+height = 325.09359544033816
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes4" parent="." unique_id=872155096 instance=ExtResource("15_fplra")]
 position = Vector2(2100, 0)
-height = 200.7475864441367
+height = 128.21504275554344
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes5" parent="." unique_id=198624990 instance=ExtResource("15_fplra")]
 position = Vector2(2600, 0)
-height = 395.21790697140534
+height = 151.25582843786196
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
-[node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618 node_paths=PackedStringArray("player")]
+[node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618]
 script = ExtResource("16_fkwrg")
-player = NodePath("../Player")
 
 [node name="MenuScreen" type="Control" parent="UserInterfaceLayer" unique_id=1935449439]
 texture_filter = 1
