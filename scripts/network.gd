@@ -112,7 +112,6 @@ func _broadcast() -> void:
 	if data.nickname.is_empty(): return
 
 	var data_local := data.duplicate()
-	print(rendering)
 
 	if not rendering and 'position' in data:
 		data_local.erase('position')
