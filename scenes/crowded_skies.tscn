@@ -255,7 +255,7 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Buttons/CenterContainer" unique_id=1571336393]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Tap anywere to play"
+text = "Tap to play"
 label_settings = SubResource("LabelSettings_6ysw1")
 horizontal_alignment = 1
 vertical_alignment = 1
