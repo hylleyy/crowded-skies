@@ -160,12 +160,12 @@ _data = {
 
 [sub_resource type="LabelSettings" id="LabelSettings_6ysw1"]
 font = ExtResource("15_mlqko")
-font_size = 80
-outline_size = 40
+font_size = 50
+outline_size = 20
 outline_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-shadow_size = 40
+shadow_size = 20
 shadow_color = Color(0.101960786, 0.101960786, 0.101960786, 1)
-shadow_offset = Vector2(10, 10)
+shadow_offset = Vector2(5, 5)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_jwfet"]
 atlas = ExtResource("2_ov7bs")
@@ -415,8 +415,10 @@ grow_vertical = 2
 
 [node name="Crowded Skies" type="MarginContainer" parent="UserInterfaceLayer/MenuScreen/VBoxContainer" unique_id=479909428]
 layout_mode = 2
+size_flags_vertical = 3
+size_flags_stretch_ratio = 2.0
 theme_override_constants/margin_left = 100
-theme_override_constants/margin_top = 200
+theme_override_constants/margin_top = 0
 theme_override_constants/margin_right = 100
 theme_override_constants/margin_bottom = 0
 
@@ -424,10 +426,22 @@ theme_override_constants/margin_bottom = 0
 custom_minimum_size = Vector2(0, 700)
 layout_mode = 2
 texture = ExtResource("14_dqm64")
-expand_mode = 5
+expand_mode = 4
 stretch_mode = 5
 
-[node name="Label" type="Label" parent="UserInterfaceLayer/MenuScreen/VBoxContainer" unique_id=1571336393]
+[node name="Buttons" type="Control" parent="UserInterfaceLayer/MenuScreen/VBoxContainer" unique_id=2141854888]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CenterContainer" type="CenterContainer" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Buttons" unique_id=1792554324]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Label" type="Label" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Buttons/CenterContainer" unique_id=1571336393]
 layout_mode = 2
 size_flags_vertical = 3
 text = "Tap anywere to play"
@@ -435,17 +449,21 @@ label_settings = SubResource("LabelSettings_6ysw1")
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Menu" type="MarginContainer" parent="UserInterfaceLayer/MenuScreen/VBoxContainer" unique_id=440367800]
-custom_minimum_size = Vector2(0, 100)
-layout_mode = 2
+[node name="MarginContainer" type="MarginContainer" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Buttons" unique_id=221771828]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -100.0
+offset_top = -100.0
+grow_horizontal = 0
+grow_vertical = 0
 theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
-[node name="HBoxContainer" type="HBoxContainer" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Menu" unique_id=1214882608]
-layout_mode = 2
-alignment = 2
-
-[node name="Settings" type="TextureRect" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Menu/HBoxContainer" unique_id=935805249]
+[node name="Settings" type="TextureRect" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Buttons/MarginContainer" unique_id=935805249]
 texture_filter = 1
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2
