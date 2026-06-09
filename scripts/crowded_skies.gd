@@ -21,9 +21,7 @@ func _on_player_die() -> void:
 func _input(event: InputEvent) -> void: # And I'm pretty sure this is overkill
 	if Network.rendering: return
 	if not player.can_spawn: return
-	if not event is InputEventMouseButton: return
-	if not event.pressed: return
-	if event.button_index != MOUSE_BUTTON_LEFT: return
+	if not event.is_action_pressed('Jump', true): return
 
 	ui.refresh_game_screen_values(player.score, player.aces)
 	ui.show_game_ui()

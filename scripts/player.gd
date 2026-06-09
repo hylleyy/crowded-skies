@@ -125,7 +125,7 @@ func _process(delta : float) -> void:
 	if not is_control_enabled: return
 
 	_update_cooldown(delta)
-	_handle_screen_touch_input()
+	_handle_player_input()
 
 func _physics_process(delta : float) -> void:
 	_apply_gravity(delta)
@@ -222,23 +222,25 @@ func spawn() -> void:
 
 func _update_cooldown(delta : float) -> void: if cooldown_timer > 0.0: cooldown_timer -= delta
 
-func _unhandled_input(event : InputEvent) -> void:
+func _handle_player_input() -> void:
 	if not is_control_enabled: return
 	if cooldown_timer > 0.0: return
+	if not Input.is_action_pressed('Jump', true): return
 	get_viewport().set_input_as_handled()
 
-	if event.is_action_pressed('Left', true) : _execute_jump(-1)
-	if event.is_action_pressed('Right', true): _execute_jump(1)
-
-func _handle_screen_touch_input() -> void:
-	if cooldown_timer > 0.0: return
-	get_viewport().set_input_as_handled()
-
-	if Input.is_action_pressed('Jump', true):
+	if Input.is_mouse_button_pressed(MOUSE_BUTTON_LEFT):
 		var screen_middle : float = get_viewport_rect().size.x / 2.0
 		var touch_x : float = get_viewport().get_mouse_position().x
 		var direction : int = 1 if touch_x > screen_middle else -1
 		_execute_jump(direction)
+
+	if Input.is_key_pressed(KEY_A) or Input.is_key_pressed(KEY_LEFT):
+		_execute_jump(-1)
+		return
+
+	if Input.is_key_pressed(KEY_D) or Input.is_key_pressed(KEY_RIGHT) or Input.is_key_pressed(KEY_SPACE):
+		_execute_jump(1)
+		return
 
 # arcade physics and movement
 
