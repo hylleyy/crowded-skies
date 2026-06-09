@@ -186,6 +186,10 @@ func _begin_respawn_sequence() -> void:
 
 		timer.queue_free()
 
+	for child in tails_container.get_children():
+		child.hide()
+		child.queue_free()
+
 	sprite.texture = active_texture
 	wings_container.show()
 	position = Vector2.ZERO
