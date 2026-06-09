@@ -109,6 +109,13 @@ func _ready() -> void:
 	
 	exit_view.connect(func():
 		if not is_control_enabled: return
+		var screen_height : float = get_viewport().size.y
+
+		# These guard clauses should fix if the player dies too far from Vector2.ZERO they end up exiting
+		# the camera view, and it used to trigger duplicate deaths. Tho I'm not sure so it needs tests.
+		if position.y > 0 and position.y <= screen_height / 2: return
+		if position.y < 0 and position.y >= -screen_height / 2: return
+
 		_take_damage(99999)
 	)
 
@@ -203,7 +210,7 @@ func spawn() -> void:
 	wings_container.show()
 	position = Vector2.ZERO
 	velocity = Vector2.UP * jump_force
-	is_control_enabled = true # TO-DO: if the player dies too far from Vector2.ZERO they end up exiting the camera view, so it triggers another death. Need to fix that later
+	is_control_enabled = true
 	aces = base_aces
 
 	enable()
