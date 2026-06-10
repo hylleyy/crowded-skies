@@ -170,6 +170,7 @@ label_y_offset = -70.0
 feathers_textures = Array[Texture2D]([SubResource("AtlasTexture_6ysw1"), SubResource("AtlasTexture_yld4r"), SubResource("AtlasTexture_fplra")])
 
 [node name="Label" type="Label" parent="." unique_id=431962856]
+visible = false
 top_level = true
 anchors_preset = 8
 anchor_left = 0.5
