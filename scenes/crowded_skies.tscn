@@ -253,7 +253,7 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Buttons/CenterContainer" unique_id=1571336393]
 layout_mode = 2
 size_flags_vertical = 3
-text = "Tap to play"
+text = "tap to play"
 label_settings = SubResource("LabelSettings_6ysw1")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -534,28 +534,28 @@ position = Vector2(600, 0)
 
 [node name="Pipes2" parent="." unique_id=2120531954 instance=ExtResource("15_fplra")]
 position = Vector2(1100, 0)
-height = 428.24336079663817
+height = 121.76202884325085
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes3" parent="." unique_id=614971302 instance=ExtResource("15_fplra")]
 position = Vector2(1600, 0)
-height = -487.7740181880507
+height = 240.29305692334322
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes4" parent="." unique_id=872155096 instance=ExtResource("15_fplra")]
 position = Vector2(2100, 0)
-height = 276.6821972469796
+height = -126.38575786261714
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
 
 [node name="Pipes5" parent="." unique_id=198624990 instance=ExtResource("15_fplra")]
 position = Vector2(2600, 0)
-height = -365.3989734252684
+height = -45.39492794266579
 randomize_height = true
 minimum_height = -500.0
 maximum_height = 500.0
