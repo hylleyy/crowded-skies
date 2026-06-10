@@ -196,10 +196,11 @@ _data = {
 &"flap": SubResource("Animation_5kejv")
 }
 
-[node name="Crowded Skies" type="Node2D" unique_id=1808951590 node_paths=PackedStringArray("player", "ui")]
+[node name="Crowded Skies" type="Node2D" unique_id=1808951590 node_paths=PackedStringArray("player", "camera", "ui")]
 texture_filter = 1
 script = ExtResource("1_mlqko")
 player = NodePath("Player")
+camera = NodePath("Camera2D")
 ui = NodePath("UserInterfaceLayer")
 
 [node name="UserInterfaceLayer" type="CanvasLayer" parent="." unique_id=1871629618]
@@ -272,6 +273,7 @@ theme_override_constants/margin_right = 50
 theme_override_constants/margin_bottom = 50
 
 [node name="Settings" type="TextureRect" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Buttons/MarginContainer" unique_id=935805249]
+visible = false
 texture_filter = 1
 custom_minimum_size = Vector2(0, 100)
 layout_mode = 2

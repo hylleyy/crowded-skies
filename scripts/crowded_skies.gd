@@ -1,6 +1,7 @@
 extends Node2D
 
 @export var player : Player
+@export var camera : Camera
 @export var ui : UI
 @export var pipes_distance : int = 600
 
@@ -31,7 +32,7 @@ func _process(_delta: float) -> void:
 	manage_pipes()
 
 func manage_pipes() -> void:
-	var current_index : int = floor(player.position.x / float(pipes_distance))
+	var current_index : int = floor(camera.position.x / float(pipes_distance))
 
 	var active_indices : Array = []
 	for i in range(current_index - pipes_behind, current_index + pipes_ahead + 1):

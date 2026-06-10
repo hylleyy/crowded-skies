@@ -13,6 +13,7 @@
 #	limitations under the License.
 
 extends Camera2D
+class_name Camera
 
 const MAX_TRAUMA : float = 1.0
 const MIN_TRAUMA : float = 0.0
