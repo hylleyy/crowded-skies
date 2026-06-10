@@ -42,6 +42,8 @@ var base_aces : int # We'll restore the player aces to this after dying
 @export var score : int = 0
 ## The time, in seconds, the player has to wait before respawning again.
 @export var respawn_delay : int = 10
+## The brief period of invulnerability (in seconds) granted to the player immediately after taking a hit.
+@export var invincibility_grace_time : float = .5
 
 @export_group('Arcade Physics')
 ## The upward velocity applied on jump execution.
@@ -81,7 +83,8 @@ static var base_gravity : float = ProjectSettings.get_setting('physics/2d/defaul
 static var static_jump_force : float
 
 var original_scale : Vector2
-var cooldown_timer : float = 0.0
+var jump_cooldown_timer : float = 0.
+var damage_cooldown_timer : float = 0.
 var is_control_enabled : bool = false # player needs to touch screen first to be able to control
 var can_spawn : bool = true
 
@@ -123,8 +126,7 @@ func _ready() -> void:
 
 func _process(delta : float) -> void:
 	if not is_control_enabled: return
-
-	_update_cooldown(delta)
+	_update_cooldowns(delta)
 	_handle_player_input()
 
 func _physics_process(delta : float) -> void:
@@ -141,8 +143,8 @@ func _physics_process(delta : float) -> void:
 	_process_collisions()
 
 func _take_damage(amount : int = 1, impact_normal : Vector2 = Vector2.ZERO) -> void:
-	# TO-DO: there is a bug of multiple collision when holding screen & hiting obstacle, need to add colldown for damage too
 	if not is_control_enabled: return
+	if damage_cooldown_timer > .0: return
 
 	var launch_direction : Vector2
 
@@ -166,6 +168,7 @@ func _take_damage(amount : int = 1, impact_normal : Vector2 = Vector2.ZERO) -> v
 
 	aces -= amount
 	damaged.emit(aces)
+	damage_cooldown_timer = invincibility_grace_time
 
 func _die() -> void:
 	if not is_control_enabled: return
@@ -220,11 +223,12 @@ func spawn() -> void:
 
 # inputs
 
-func _update_cooldown(delta : float) -> void: if cooldown_timer > 0.0: cooldown_timer -= delta
+func _update_cooldowns(delta : float) -> void:
+	if jump_cooldown_timer > .0: jump_cooldown_timer -= delta
+	if damage_cooldown_timer > .0: damage_cooldown_timer -= delta
 
 func _handle_player_input() -> void:
 	if not is_control_enabled: return
-	if cooldown_timer > 0.0: return
 	if not Input.is_action_pressed('Jump', true): return
 	get_viewport().set_input_as_handled()
 
@@ -253,7 +257,9 @@ func _apply_friction(delta : float) -> void:
 	velocity.x = move_toward(velocity.x, 0, horizontal_friction * delta)
 
 func _execute_jump(direction : int) -> void:
-	cooldown_timer = jump_cooldown
+	if jump_cooldown_timer > .0: return
+	if damage_cooldown_timer > .0: return
+	jump_cooldown_timer = jump_cooldown
 
 	velocity.y = -jump_force
 	var current_forward_force : float = forward_force
