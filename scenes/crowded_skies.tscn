@@ -253,7 +253,7 @@ grow_vertical = 2
 [node name="Label" type="Label" parent="UserInterfaceLayer/MenuScreen/VBoxContainer/Buttons/CenterContainer" unique_id=1571336393]
 layout_mode = 2
 size_flags_vertical = 3
-text = "tap to play"
+text = "< tap to play >"
 label_settings = SubResource("LabelSettings_6ysw1")
 horizontal_alignment = 1
 vertical_alignment = 1
@@ -532,30 +532,4 @@ texture = ExtResource("27_jwfet")
 [node name="Pipes" parent="." unique_id=1200576547 instance=ExtResource("15_fplra")]
 position = Vector2(600, 0)
 
-[node name="Pipes2" parent="." unique_id=2120531954 instance=ExtResource("15_fplra")]
-position = Vector2(1100, 0)
-height = 121.76202884325085
-randomize_height = true
-minimum_height = -500.0
-maximum_height = 500.0
-
-[node name="Pipes3" parent="." unique_id=614971302 instance=ExtResource("15_fplra")]
-position = Vector2(1600, 0)
-height = 240.29305692334322
-randomize_height = true
-minimum_height = -500.0
-maximum_height = 500.0
-
-[node name="Pipes4" parent="." unique_id=872155096 instance=ExtResource("15_fplra")]
-position = Vector2(2100, 0)
-height = -126.38575786261714
-randomize_height = true
-minimum_height = -500.0
-maximum_height = 500.0
-
-[node name="Pipes5" parent="." unique_id=198624990 instance=ExtResource("15_fplra")]
-position = Vector2(2600, 0)
-height = -45.39492794266579
-randomize_height = true
-minimum_height = -500.0
-maximum_height = 500.0
+[node name="PipesGroup" type="Node2D" parent="." unique_id=1844272316]
