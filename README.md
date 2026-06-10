@@ -40,9 +40,9 @@ All source code in this repository is licensed under the [Apache License, Versio
 
 ### 🎨 Artistic Assets
 
-We love open source, but we also believe in protecting our artists! We also love technological advancements; however, **no AI-generated art was used in the creation of this game**. Every asset was handcrafted by human artists at Inkpunk Game Studio.
+We love open source, but we also believe in protecting our artists! We also love technological advancements; however, **no AI-generated art was used in the creation of this game**. Every asset was handcrafted by human artists at INKPNK Game Studio.
 
-Due to the nature of the artwork and for the protection of the creators, all assets in the `/artwork` folder are proprietary. While the code is open for you to tinker with, the visual soul of the game stays with our team at Inkpunk Game Studio.
+Due to the nature of the artwork and for the protection of the creators, all assets in the `/artwork` folder are proprietary. While the code is open for you to tinker with, the visual soul of the game stays with our team at INKPNK Game Studio.
 
 Please see [LICENSE-ARTWORK.md in the artwork directory](assets/artwork/LICENSE-ARTWORK.md) for specific usage terms and how you can (and can't) use these files.
 

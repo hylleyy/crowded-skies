@@ -1,9 +1,9 @@
 # Notice
 
 Crowded Skies
-Copyright © 2026 Inkpunk Game Studio
+Copyright © 2026 INKPNK Game Studio
 
-This product includes software developed by Inkpunk Game Studio and incorporates third-party open-source components as detailed below.
+This product includes software developed by INKPNK Game Studio and incorporates third-party open-source components as detailed below.
 
 ## Third-Party Components & Libraries
 
@@ -35,11 +35,11 @@ Unless required by applicable law or agreed to in writing, software distributed 
 
 ## Crowded Skies Artwork
 
-All proprietary artistic assets in this project (including but not limited to sprites, textures, UI elements, logos, and character designs) are protected by copyright law and are owned exclusively by Inkpunk Game Studio.
+All proprietary artistic assets in this project (including but not limited to sprites, textures, UI elements, logos, and character designs) are protected by copyright law and are owned exclusively by INKPNK Game Studio.
 
-* **Human Craftsmanship:** Every artistic asset was handcrafted by human artists at Inkpunk Game Studio. No AI-generated art, models, or training weights were used in the creation of these assets.
+* **Human Craftsmanship:** Every artistic asset was handcrafted by human artists at INKPNK Game Studio. No AI-generated art, models, or training weights were used in the creation of these assets.
 * **Permitted Use:** Assets may be viewed and executed solely as part of the original game software. Media captures (screenshots, videos) for reviews, criticism, or gameplay sharing are permitted provided no raw asset files are distributed.
 * **Prohibited Acts:** Extraction, decompilation, reuse in standalone software or commercial projects, and the sale, sublicensing, or redistribution of raw asset files are strictly prohibited.
-* **Fan Content Policy:** Non-commercial derivative works (art, free mods, fan-sites) are permitted under the "Inkpunk Promise," subject to clear attribution and adherence to community standards regarding human-made art and respect. Failure to comply automatically revokes these permissions.
+* **Fan Content Policy:** Non-commercial derivative works (art, free mods, fan-sites) are permitted under the "INKPNK Promise," subject to clear attribution and adherence to community standards regarding human-made art and respect. Failure to comply automatically revokes these permissions.
 
 For the full text of terms, conditions, and community guidelines, please refer to [the artwork license file](assets/artwork/LICENSE-ARTWORK.md).

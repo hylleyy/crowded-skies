@@ -4,20 +4,20 @@
 
 Thank you for playing *Crowded Skies*!
 
-*Inkpunk Game Studio* ("we," "our," or "us") respects your privacy and is committed to protecting it. This Privacy Policy explains our practices regarding data collection, use, and disclosure when you play Crowded Skies (the "Game") downloaded from the Google Play Store.
+*INKPNK Game Studio* ("we," "our," or "us") respects your privacy and is committed to protecting it. This Privacy Policy explains our practices regarding data collection, use, and disclosure when you play Crowded Skies (the "Game") downloaded from the Google Play Store.
 
 1. **Data Collection and Usage**
 
 *Crowded Skies* is designed to be a privacy-respecting, zero-configuration local multiplayer game. *We do not collect, store, or transmit any personal data or personally identifiable information (PII).* Because the game relies on local network architecture (UDP broadcasting) to connect players:
 - *No internet connection to external servers is required* for core gameplay.
-- *No telemetry, analytics, or behavioral data* is sent back to Inkpunk Game Studio.
+- *No telemetry, analytics, or behavioral data* is sent back to INKPNK Game Studio.
 - *No account creation* is required to play the game.
 
 2. **Local Network Access**
 
 To enable the local multiplayer features described in our documentation, the game requires access to your device's *Local Area Network (LAN)*. 
 - This access is used *strictly* to broadcast and listen for other devices on the same local network running *Crowded Skies*.
-- This peer-to-peer communication is direct between devices and is never routed through, or visible to, Inkpunk Game Studio or any third-party servers.
+- This peer-to-peer communication is direct between devices and is never routed through, or visible to, INKPNK Game Studio or any third-party servers.
 
 3. **Third-Party Services and Tools**
 
@@ -41,5 +41,5 @@ We may update our Privacy Policy from time to time. If we make significant chang
 
 7. **Contact Us**
 
-If you have any questions, concerns, or suggestions regarding this Privacy Policy, please reach out to the development team at Inkpunk Game Studio via our official repository or contact channels.
+If you have any questions, concerns, or suggestions regarding this Privacy Policy, please reach out to the development team at INKPNK Game Studio via our official repository or contact channels.
 
