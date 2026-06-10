@@ -9,7 +9,6 @@
 [ext_resource type="AudioStream" uid="uid://42qd58b36kee" path="res://assets/sound/effects/hit.wav" id="11_cxrsx"]
 [ext_resource type="AudioStream" uid="uid://n8vf0qntuayh" path="res://assets/sound/effects/score.mp3" id="13_fkwrg"]
 [ext_resource type="Texture2D" uid="uid://b8ni7rnx6aebv" path="res://assets/artwork/branding/crowded_skies.png" id="14_dqm64"]
-[ext_resource type="PackedScene" uid="uid://brckemi80fsna" path="res://scenes/prefabs/pipes.tscn" id="15_fplra"]
 [ext_resource type="Texture2D" uid="uid://b66go6ja2wwty" path="res://assets/artwork/parallax/sunset/parallax_0.png" id="15_hr8dd"]
 [ext_resource type="FontFile" uid="uid://i7jh7pi3cu7s" path="res://assets/fonts/pixel_operator/PixelOperator.ttf" id="15_mlqko"]
 [ext_resource type="Script" uid="uid://c8sxsjuqopa2f" path="res://scripts/ui.gd" id="16_fkwrg"]
@@ -528,8 +527,5 @@ repeat_times = 5
 z_index = 1
 scale = Vector2(5, 5)
 texture = ExtResource("27_jwfet")
-
-[node name="Pipes" parent="." unique_id=1200576547 instance=ExtResource("15_fplra")]
-position = Vector2(600, 0)
 
 [node name="PipesGroup" type="Node2D" parent="." unique_id=1844272316]
