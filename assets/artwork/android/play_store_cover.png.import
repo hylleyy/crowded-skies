@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c8dp7gxy80gv6"
-path="res://.godot/imported/adaptative_monochrome_trimmed.png-1015e751356da0b8e831af90f697f33d.ctex"
+uid="uid://cmv88k77cnb65"
+path="res://.godot/imported/play_store_cover.png-a88c8d352470d8db18147eca67b3e75d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/artwork/android/adaptative_monochrome_trimmed.png"
-dest_files=["res://.godot/imported/adaptative_monochrome_trimmed.png-1015e751356da0b8e831af90f697f33d.ctex"]
+source_file="res://assets/artwork/android/play_store_cover.png"
+dest_files=["res://.godot/imported/play_store_cover.png-a88c8d352470d8db18147eca67b3e75d.ctex"]
 
 [params]
 

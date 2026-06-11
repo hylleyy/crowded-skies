@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://c2cfn0i5dj5pe"
-path="res://.godot/imported/main512.png-ecd6b7080a9d21eaaa4f4dd539a06dd9.ctex"
+uid="uid://ddisdxwiaoiv4"
+path="res://.godot/imported/play_store_icon.png-77f6d60c7962572a383f63e5e6f16a66.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/artwork/android/main512.png"
-dest_files=["res://.godot/imported/main512.png-ecd6b7080a9d21eaaa4f4dd539a06dd9.ctex"]
+source_file="res://assets/artwork/android/play_store_icon.png"
+dest_files=["res://.godot/imported/play_store_icon.png-77f6d60c7962572a383f63e5e6f16a66.ctex"]
 
 [params]
 
