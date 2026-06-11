@@ -16,7 +16,7 @@ run/main_scene="uid://cav6bmpqa8odc"
 config/features=PackedStringArray("4.6", "Mobile")
 boot_splash/bg_color=Color(0.078431375, 0.078431375, 0.078431375, 1)
 boot_splash/image="uid://bsxnxygeig8e2"
-config/icon="uid://c8dp7gxy80gv6"
+config/icon="uid://db0n60x5la0h6"
 
 [autoload]
 
@@ -26,7 +26,8 @@ Network="*uid://1u7lo6vv1ob6"
 
 window/size/viewport_width=1080
 window/size/viewport_height=1920
-window/size/mode=2
+window/size/mode=3
+window/size/borderless=true
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
