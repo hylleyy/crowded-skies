@@ -32,6 +32,15 @@ window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
 window/handheld/orientation=1
 
+[file_customization]
+
+folder_colors={
+"res://android/": "gray",
+"res://assets/": "yellow",
+"res://scenes/": "teal",
+"res://scripts/": "red"
+}
+
 [global_group]
 
 Players=""
